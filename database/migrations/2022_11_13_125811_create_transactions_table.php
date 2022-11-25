@@ -32,7 +32,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->dropForeign(['product_id', 'category_id']);
+            $table->dropConstrainedForeignIdFor(\App\Models\Product::class);
+            $table->dropConstrainedForeignIdFor(\App\Models\Category::class);
         });
         Schema::dropIfExists('transactions');
     }

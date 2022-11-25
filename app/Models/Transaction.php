@@ -10,4 +10,14 @@ class Transaction extends Model
 {
     use HasFactory;
     use HasUuids;
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
