@@ -22,6 +22,7 @@ class ListTransactionTest extends TestCase
             ->create();
         $response = $this->get('/api/transactions');
 
+        $data = $response->getContent();
         $response->assertStatus(200);//->assertJsonCount();
     }
 }

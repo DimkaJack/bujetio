@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Dto\Transaction\TransactionStoreDto;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Http\Resources\TransactionResources;
 use App\Models\Transaction;
 use App\Services\TransactionService;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 final class TransactionController extends Controller
 {
@@ -21,11 +24,11 @@ final class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return TransactionResources
+     * @return AnonymousResourceCollection
      */
-    public function index(): TransactionResources
+    public function index(): AnonymousResourceCollection
     {
-        return new TransactionResources($this->transactionService->getList());
+        return TransactionResources::collection($this->transactionService->getList());
     }
 
     /**
@@ -42,11 +45,13 @@ final class TransactionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreTransactionRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return TransactionResources
      */
-    public function store(StoreTransactionRequest $request)
+    public function store(Request $request): TransactionResources
     {
-        //
+        $dto = TransactionStoreDto::fromRequest($request);
+
+        return new TransactionResources($this->transactionService->store($dto));
     }
 
     /**

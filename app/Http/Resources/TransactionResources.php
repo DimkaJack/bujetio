@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class TransactionResources extends ResourceCollection
+class TransactionResources extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
