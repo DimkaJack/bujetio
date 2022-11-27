@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('type');
             $table->foreignUuid('product_id')->constrained('products');
             $table->foreignUuid('category_id')->constrained('categories');
+            $table->foreignUuid('user_id')->constrained('users');
             $table->integer('amount_amount');
             $table->string('amount_currency');
             $table->timestamps();
@@ -36,6 +37,7 @@ return new class extends Migration
         Schema::table('transactions', function (Blueprint $table) {
             $table->dropConstrainedForeignIdFor(\App\Models\Product::class);
             $table->dropConstrainedForeignIdFor(\App\Models\Category::class);
+            $table->dropConstrainedForeignIdFor(\App\Models\User::class);
         });
         Schema::dropIfExists('transactions');
     }

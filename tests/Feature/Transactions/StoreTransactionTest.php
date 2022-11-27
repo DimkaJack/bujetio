@@ -19,9 +19,9 @@ class StoreTransactionTest extends TestCase
         $user = User::factory()->create();
 
         /** @var Product $product */
-        $product = Product::factory()->create();
+        $product = Product::factory()->for($user)->create();
         /** @var Category $category */
-        $category = Category::factory()->create();
+        $category = Category::factory()->for($user)->create();
 
         $request = [
             'type' => 1,

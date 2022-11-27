@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid('id');
             $table->string('name')->unique();
             $table->string('color');
+            $table->foreignUuid('user_id')->constrained('users');
             $table->timestamps();
 
             $table->primary('id');
@@ -30,6 +31,9 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropConstrainedForeignIdFor(\App\Models\User::class);
+        });
         Schema::dropIfExists('categories');
     }
 };

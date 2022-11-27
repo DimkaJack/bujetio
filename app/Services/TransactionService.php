@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Dto\Transaction\TransactionStoreDto;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 final class TransactionService
 {
@@ -26,6 +27,7 @@ final class TransactionService
         //@todo change to cast
         $transaction->amount_amount = $dto->amount->getAmount();
         $transaction->amount_currency = $dto->amount->getCurrency();
+        $transaction->user()->associate(Auth::user());
         $transaction->save();
 
         return $transaction;

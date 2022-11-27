@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('start_balance_currency');
             $table->integer('balance_amount');
             $table->string('balance_currency');
+            $table->foreignUuid('user_id')->constrained('users');
             $table->timestamps();
 
             $table->primary('id');
@@ -35,7 +36,9 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropConstrainedForeignIdFor(\App\Models\User::class);
+        });
         Schema::dropIfExists('products');
-        Schema::dropIfExists('transactions');
     }
 };

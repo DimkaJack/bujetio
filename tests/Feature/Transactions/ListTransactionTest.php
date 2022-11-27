@@ -19,8 +19,9 @@ class ListTransactionTest extends TestCase
     {
         $user = User::factory()->create();
         Transaction::factory()
-            ->for(Product::factory()->create())
-            ->for(Category::factory()->create())
+            ->for(Product::factory()->for($user)->create())
+            ->for(Category::factory()->for($user)->create())
+            ->for($user)
             ->create();
 
         //@todo find auth request base
