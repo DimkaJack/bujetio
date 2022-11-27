@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('categories')
         ->controller(CategoryController::class)
+        ->group(function () {
+            Route::get('/', 'index');
+            Route::post('/', 'store');
+            Route::patch('/{uuid}', 'update');
+            Route::delete('/{uuid}', 'destroy');
+        });
+
+    Route::prefix('products')
+        ->controller(ProductController::class)
         ->group(function () {
             Route::get('/', 'index');
             Route::post('/', 'store');

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Transactions;
+namespace Tests\Feature\Categories;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class StoreTransactionTest extends TestCase
+class StoreCategoryTest extends TestCase
 {
     use DatabaseTransactions;
 

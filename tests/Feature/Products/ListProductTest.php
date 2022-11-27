@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Transactions;
+namespace Tests\Feature\Products;
 
 use App\Models\Category;
 use App\Models\Product;
@@ -10,26 +10,22 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class UpdateTransactionTest extends TestCase
+class ListProductTest extends TestCase
 {
     use DatabaseTransactions;
 
     public function testSuccess()
     {
         $user = User::factory()->create();
-        $category = Category::factory()
+        Product::factory()
             ->for($user)
             ->create();
 
-        $request = [
-            'name' => fake()->name,
-            'color' => fake()->colorName,
-        ];
-
+        //@todo find auth request base
         $response = $this->actingAs($user)
             ->withSession(['banned' => false])
-            ->patchJson('/api/categories/' . $category->id, $request);
+            ->get('/api/products');
 
-        $response->assertStatus(200);//->assertJsonCount();
+        $response->assertStatus(200)->assertJsonCount(1, 'data');
     }
 }

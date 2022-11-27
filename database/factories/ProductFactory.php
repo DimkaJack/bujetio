@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Constants\ProductTypeEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,8 +19,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => fake()->streetName(),
-            //@todo change to enum
-            'type' => fake()->word(),
+            'type' => ProductTypeEnum::ACCOUNT->value,
             //@todo change to Money
             'start_balance_amount' => 0,
             'start_balance_currency' => 'RUB',

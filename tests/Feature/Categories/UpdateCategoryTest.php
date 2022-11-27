@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Transactions;
+namespace Tests\Feature\Categories;
 
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class DeleteTransactionTest extends TestCase
+class UpdateCategoryTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -20,9 +21,14 @@ class DeleteTransactionTest extends TestCase
             ->for($user)
             ->create();
 
+        $request = [
+            'name' => fake()->name,
+            'color' => fake()->colorName,
+        ];
+
         $response = $this->actingAs($user)
             ->withSession(['banned' => false])
-            ->deleteJson('/api/categories/' . $category->id);
+            ->patchJson('/api/categories/' . $category->id, $request);
 
         $response->assertStatus(200);//->assertJsonCount();
     }

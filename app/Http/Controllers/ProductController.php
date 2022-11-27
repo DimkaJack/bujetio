@@ -2,20 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Dto\Product\ProductStoreDto;
+use App\Dto\Product\ProductUpdateDto;
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Services\ProductService;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Ramsey\Uuid\Uuid;
 
 class ProductController extends Controller
 {
+    public function __construct(
+        private readonly ProductService $productService,
+    ) {
+        //
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        //
+        return ProductResource::collection($this->productService->getList());
     }
 
     /**
@@ -31,12 +44,14 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreProductRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreProductRequest $request
+     * @return ProductResource
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreProductRequest $request): ProductResource
     {
-        //
+        $dto = ProductStoreDto::fromRequest($request);
+
+        return new ProductResource($this->productService->store($dto));
     }
 
     /**
@@ -64,23 +79,29 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateProductRequest  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param UpdateProductRequest $request
+     * @return ProductResource
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request): ProductResource
     {
-        //
+        $dto = ProductUpdateDto::fromRequest($request);
+
+        return new ProductResource($this->productService->update($dto));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return bool
      */
-    public function destroy(Product $product)
+    public function destroy(Request $request): bool
     {
-        //
+        //@todo fix to validation
+        if (!empty($request->uuid) && Uuid::isValid($request->uuid)) {
+            return $this->productService->delete(Uuid::fromString($request->uuid));
+        }
+
+        return false;
     }
 }

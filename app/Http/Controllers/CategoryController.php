@@ -97,6 +97,7 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request): bool
     {
+        //@todo fix to validation
         if (!empty($request->uuid) && Uuid::isValid($request->uuid)) {
             return $this->categoryService->delete(Uuid::fromString($request->uuid));
         }

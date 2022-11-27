@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('name');
-            $table->string('type');
+            $table->integer('type');
             //@todo extract balance to entity
             $table->integer('start_balance_amount');
             $table->string('start_balance_currency');
