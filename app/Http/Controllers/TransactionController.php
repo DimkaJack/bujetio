@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Dto\Transaction\TransactionStoreDto;
-use App\Http\Requests\StoreTransactionRequest;
-use App\Http\Requests\UpdateTransactionRequest;
-use App\Http\Resources\TransactionResources;
+use App\Http\Requests\Transaction\StoreTransactionRequest;
+use App\Http\Requests\Transaction\UpdateTransactionRequest;
+use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use App\Services\TransactionService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 final class TransactionController extends Controller
 {
@@ -28,7 +29,7 @@ final class TransactionController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return TransactionResources::collection($this->transactionService->getList());
+        return TransactionResource::collection($this->transactionService->getList());
     }
 
     /**
@@ -45,13 +46,13 @@ final class TransactionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreTransactionRequest $request
-     * @return TransactionResources
+     * @return TransactionResource
      */
-    public function store(StoreTransactionRequest $request): TransactionResources
+    public function store(StoreTransactionRequest $request): TransactionResource
     {
         $dto = TransactionStoreDto::fromRequest($request);
 
-        return new TransactionResources($this->transactionService->store($dto));
+        return new TransactionResource($this->transactionService->store($dto));
     }
 
     /**
@@ -79,9 +80,9 @@ final class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTransactionRequest  $request
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @param UpdateTransactionRequest $request
+     * @param Transaction $transaction
+     * @return Response
      */
     public function update(UpdateTransactionRequest $request, Transaction $transaction)
     {
