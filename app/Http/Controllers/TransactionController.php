@@ -44,10 +44,10 @@ final class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTransactionRequest  $request
+     * @param StoreTransactionRequest $request
      * @return TransactionResources
      */
-    public function store(Request $request): TransactionResources
+    public function store(StoreTransactionRequest $request): TransactionResources
     {
         $dto = TransactionStoreDto::fromRequest($request);
 

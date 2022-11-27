@@ -6,7 +6,7 @@ namespace Tests\Feature\Transactions;
 
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -16,6 +16,8 @@ class StoreTransactionTest extends TestCase
 
     public function testSuccess()
     {
+        $user = User::factory()->create();
+
         /** @var Product $product */
         $product = Product::factory()->create();
         /** @var Category $category */
@@ -29,9 +31,10 @@ class StoreTransactionTest extends TestCase
             'categoryId' => $category->id,
         ];
 
-        $response = $this->postJson('/api/transactions', $request);
+        $response = $this->actingAs($user)
+            ->withSession(['banned' => false])
+            ->postJson('/api/transactions', $request);
 
-        $data = $response->getContent();
         $response->assertStatus(201);//->assertJsonCount();
     }
 }
