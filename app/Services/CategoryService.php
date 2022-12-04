@@ -40,10 +40,26 @@ final class CategoryService
         return $category;
     }
 
+    public function updateByCategory(CategoryUpdateDto $dto, Category $category): Category
+    {
+        $category->name = $dto->name;
+        $category->color = $dto->color;
+        $category->save();
+
+        return $category;
+    }
+
     public function delete(UuidInterface $id): bool
     {
         //@todo add transaction
         $category = Category::find($id);
+        $category->delete();
+
+        return true;
+    }
+
+    public function deleteByCategory(Category $category): bool
+    {
         $category->delete();
 
         return true;
