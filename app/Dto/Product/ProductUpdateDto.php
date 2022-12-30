@@ -13,7 +13,7 @@ use Ramsey\Uuid\UuidInterface;
 final class ProductUpdateDto
 {
     public function __construct(
-        public readonly UuidInterface $id,
+        public readonly ?UuidInterface $id,
         public readonly string $name,
         public readonly ProductTypeEnum $type,
         public readonly Money $startBalance,
@@ -25,7 +25,7 @@ final class ProductUpdateDto
     public static function fromRequest(Request $request): static
     {
         return new static(
-            id: Uuid::fromString($request->uuid),
+            id: isset($request->uuid) ? Uuid::fromString($request->uuid) : null,
             name: $request->input('name'),
             type: ProductTypeEnum::from($request->input('type')),
             startBalance: new Money(

@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Dto\Category\CategoryStoreDto;
 use App\Dto\Category\CategoryUpdateDto;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\UuidInterface;
@@ -15,8 +16,9 @@ final class CategoryService
 {
     public function getList(): Collection
     {
-        $response = Category::all();
-        return $response;
+        /** @var User $user */
+        $user = Auth::user();
+        return $user->categories;
     }
 
     public function store(CategoryStoreDto $dto): Category

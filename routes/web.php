@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Inertia\CategoryController;
+use App\Http\Controllers\Inertia\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('categories', CategoryController::class)
+    ->middleware(['auth', 'verified']);
+
+Route::resource('products', ProductController::class)
     ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {

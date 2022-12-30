@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Dto\Product\ProductStoreDto;
 use App\Dto\Product\ProductUpdateDto;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\UuidInterface;
@@ -15,8 +16,9 @@ final class ProductService
 {
     public function getList(): Collection
     {
-        $response = Product::all();
-        return $response;
+        /** @var User $user */
+        $user = Auth::user();
+        return $user->products;
     }
 
     public function store(ProductStoreDto $dto): Product
@@ -37,6 +39,12 @@ final class ProductService
     public function update(ProductUpdateDto $dto): Product
     {
         $product = Product::find($dto->id);
+
+        return $this->updateByProduct($dto, $product);
+    }
+
+    public function updateByProduct(ProductUpdateDto $dto, Product $product): Product
+    {
         $product->name = $dto->name;
         $product->type = $dto->type->value;
         $product->start_balance_amount = $dto->startBalance->getAmount();
@@ -50,8 +58,14 @@ final class ProductService
 
     public function delete(UuidInterface $id): bool
     {
-        //@todo add transaction
         $product = Product::find($id);
+
+        return $this->deleteByProduct($product);
+    }
+
+    public function deleteByProduct(Product $product): bool
+    {
+        //@todo add transaction
         $product->delete();
 
         return true;

@@ -10,8 +10,11 @@ use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Services\ProductService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Inertia\Inertia;
+use Inertia\Response;
 use Ramsey\Uuid\Uuid;
 
 class ProductController extends Controller
@@ -22,24 +25,16 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return AnonymousResourceCollection
-     */
-    public function index(): AnonymousResourceCollection
+    public function index(): Response
     {
-        return ProductResource::collection($this->productService->getList());
+        return Inertia::render('Product/Index', [
+            'products' => ProductResource::collection($this->productService->getList())
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(): Response
     {
-        //
+        return Inertia::render('Product/Create');
     }
 
     /**
@@ -48,11 +43,12 @@ class ProductController extends Controller
      * @param StoreProductRequest $request
      * @return ProductResource
      */
-    public function store(StoreProductRequest $request): ProductResource
+    public function store(StoreProductRequest $request): RedirectResponse
     {
         $dto = ProductStoreDto::fromRequest($request);
+        $this->productService->store($dto);
 
-        return new ProductResource($this->productService->store($dto));
+        return redirect()->route('products.index');
     }
 
     /**
@@ -72,37 +68,23 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $product): Response
     {
-        //
+        return Inertia::render('Product/Edit', compact('product'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param UpdateProductRequest $request
-     * @return ProductResource
-     */
-    public function update(UpdateProductRequest $request): ProductResource
+    public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
         $dto = ProductUpdateDto::fromRequest($request);
+        $this->productService->updateByProduct($dto, $product);
 
-        return new ProductResource($this->productService->update($dto));
+        return redirect()->route('products.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Request $request
-     * @return bool
-     */
-    public function destroy(Request $request): bool
+    public function destroy(Product $product): RedirectResponse
     {
-        //@todo fix to validation
-        if (!empty($request->uuid) && Uuid::isValid($request->uuid)) {
-            return $this->productService->delete(Uuid::fromString($request->uuid));
-        }
+        $this->productService->deleteByProduct($product);
 
-        return false;
+        return redirect()->route('products.index');
     }
 }
