@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Inertia;
 
+use App\Constants\TransactionTypeEnum;
 use App\Dto\Transaction\TransactionStoreDto;
 use App\Dto\Transaction\TransactionUpdateDto;
 use App\Http\Controllers\Controller;
@@ -11,6 +12,8 @@ use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
+use App\Services\CategoryService;
+use App\Services\ProductService;
 use App\Services\TransactionService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -19,6 +22,8 @@ use Inertia\Response;
 final class TransactionController extends Controller
 {
     public function __construct(
+        private readonly CategoryService $categoryService,
+        private readonly ProductService $productService,
         private readonly TransactionService $transactionService,
     ) {
         //
@@ -33,7 +38,18 @@ final class TransactionController extends Controller
 
     public function create(): Response
     {
-        return Inertia::render('Transaction/Create');
+        $categories = $this->categoryService->getList();
+        $products = $this->productService->getList();
+        $types = TransactionTypeEnum::getList();
+
+        return Inertia::render(
+            'Transaction/Create',
+            compact(
+                'categories',
+                'products',
+                'types',
+            )
+        );
     }
 
     public function store(StoreTransactionRequest $request): RedirectResponse
@@ -51,7 +67,20 @@ final class TransactionController extends Controller
 
     public function edit(Transaction $transaction): Response
     {
-        return Inertia::render('Transaction/Edit', compact('transaction'));
+        //@todo send resource to response
+        $categories = $this->categoryService->getList();
+        $products = $this->productService->getList();
+        $types = TransactionTypeEnum::getList();
+
+        return Inertia::render(
+            'Transaction/Edit',
+            compact(
+                'categories',
+                'products',
+                'transaction',
+                'types',
+            )
+        );
     }
 
     public function update(UpdateTransactionRequest $request, Transaction $transaction): RedirectResponse

@@ -2,13 +2,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import TextInput from '@/Components/TextInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import {useForm, Head} from '@inertiajs/inertia-vue3';
 import CurrencyInput from "@/Components/CurrencyInput.vue";
 
 const props = defineProps({
+    categories: Object,
+    products: Object,
     transaction: Object,
+    types: Array,
 });
 
 const form = useForm({
@@ -19,17 +21,6 @@ const form = useForm({
     productId: props.transaction.product_id,
     categoryId: props.transaction.category_id,
 });
-
-const selectOptions = [
-    {
-        text: 'Приход',
-        value: 1,
-    },
-    {
-        text: 'Расход',
-        value: 2,
-    },
-];
 </script>
 
 <template>
@@ -42,9 +33,9 @@ const selectOptions = [
                     <InputLabel for="type" value="Type" />
 
                     <!--                    @todo dropdown make route-->
-                    <select class="mt-1 block w-full" v-model="form.type">
-                        <option v-for="option in selectOptions" :value="option.value">
-                            {{ option.text }}
+                    <select class="mt-1 block w-full" v-model="form.type" required>
+                        <option v-for="option in props.types" :value="option.value">
+                            {{ option.label }}
                         </option>
                     </select>
 
@@ -69,21 +60,12 @@ const selectOptions = [
                 <div>
                     <InputLabel for="product" value="Product" />
 
-                    <TextInput
-                        id="product"
-                        type="text"
-                        class="mt-1 block w-full"
-                        v-model="form.productId"
-                        required
-                        autofocus
-                    />
-
                     <!--                    @todo dropdown make route-->
-                    <!--                    <select class="mt-1 block w-full" v-model="form.type">-->
-                    <!--                        <option v-for="option in selectOptions" :value="option.value">-->
-                    <!--                            {{ option.text }}-->
-                    <!--                        </option>-->
-                    <!--                    </select>-->
+                    <select class="mt-1 block w-full" v-model="form.productId" required>
+                        <option v-for="option in props.products" :value="option.id">
+                            {{ option.name }}
+                        </option>
+                    </select>
 
                     <InputError class="mt-2" :message="form.errors.product" />
                 </div>
@@ -91,21 +73,12 @@ const selectOptions = [
                 <div>
                     <InputLabel for="category" value="Category" />
 
-                    <TextInput
-                        id="category"
-                        type="text"
-                        class="mt-1 block w-full"
-                        v-model="form.categoryId"
-                        required
-                        autofocus
-                    />
-
                     <!--                    @todo dropdown make route-->
-                    <!--                    <select class="mt-1 block w-full" v-model="form.type">-->
-                    <!--                        <option v-for="option in selectOptions" :value="option.value">-->
-                    <!--                            {{ option.text }}-->
-                    <!--                        </option>-->
-                    <!--                    </select>-->
+                    <select class="mt-1 block w-full" v-model="form.categoryId" required>
+                        <option v-for="option in props.categories" :value="option.id">
+                            {{ option.name }}
+                        </option>
+                    </select>
 
                     <InputError class="mt-2" :message="form.errors.category" />
                 </div>

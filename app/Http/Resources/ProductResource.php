@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Constants\ProductTypeEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
@@ -14,6 +15,15 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'type' => ProductTypeEnum::from($this->type)->label(),
+            'startBalanceAmount' => $this->start_balance_amount,
+            'startBalanceCurrency' => $this->start_balance_currency,
+            'balanceAmount' => $this->balance_amount,
+            'balanceCurrency' => $this->balance_currency,
+            'createdAt' => $this->created_at,
+        ];
     }
 }

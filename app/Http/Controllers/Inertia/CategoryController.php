@@ -57,6 +57,7 @@ class CategoryController extends Controller
 
     public function edit(Category $category): Response
     {
+        //@todo send resource to response
         return Inertia::render('Category/Edit', compact('category'));
     }
 

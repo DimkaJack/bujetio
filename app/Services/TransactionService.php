@@ -17,7 +17,7 @@ final class TransactionService
     {
         /** @var User $user */
         $user = Auth::user();
-        return $user->transactions;
+        return $user->transactions()->with(['product', 'category'])->get();
     }
 
     public function store(TransactionStoreDto $dto): Transaction

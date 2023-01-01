@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Inertia;
 
+use App\Constants\ProductTypeEnum;
 use App\Dto\Product\ProductStoreDto;
 use App\Dto\Product\ProductUpdateDto;
 use App\Http\Controllers\Controller;
@@ -34,7 +35,9 @@ class ProductController extends Controller
 
     public function create(): Response
     {
-        return Inertia::render('Product/Create');
+        $types = ProductTypeEnum::getList();
+
+        return Inertia::render('Product/Create', compact('types'));
     }
 
     /**
@@ -70,7 +73,13 @@ class ProductController extends Controller
      */
     public function edit(Product $product): Response
     {
-        return Inertia::render('Product/Edit', compact('product'));
+        //@todo send resource to response
+        $types = ProductTypeEnum::getList();
+
+        return Inertia::render(
+            'Product/Edit',
+            compact('product', 'types')
+        );
     }
 
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse

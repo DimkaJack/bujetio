@@ -16,9 +16,9 @@ function destroy(id) {
     <tr>
         <td class="border px-4 py-2">{{ product.name }}</td>
         <td class="border px-4 py-2">{{ product.type }}</td>
-        <td class="border px-4 py-2">{{ product.start_balance_amount }}</td>
-        <td class="border px-4 py-2">{{ product.balance_amount }}</td>
-        <td class="border px-4 py-2">{{ new Date(product.created_at).toLocaleString() }}</td>
+        <td class="border px-4 py-2">{{ product.startBalanceAmount }}</td>
+        <td class="border px-4 py-2">{{ product.balanceAmount }}</td>
+        <td class="border px-4 py-2">{{ new Date(product.createdAt).toLocaleString() }}</td>
         <td class="border px-4 py-2">
             <Link
                 tabIndex="1"

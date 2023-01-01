@@ -9,6 +9,7 @@ import CurrencyInput from "@/Components/CurrencyInput.vue";
 
 const props = defineProps({
     product: Object,
+    types: Array
 });
 
 const form = useForm({
@@ -19,25 +20,6 @@ const form = useForm({
     balanceAmount: props.product.balance_amount,
     balanceAmountCurency: props.product.balance_amount_curency,
 });
-
-const selectOptions = [
-    {
-        text: 'Дебетовая карта',
-        value: 1,
-    },
-    {
-        text: 'Кредитная карта',
-        value: 2,
-    },
-    {
-        text: 'Кредит',
-        value: 3,
-    },
-    {
-        text: 'Счет',
-        value: 4,
-    },
-];
 </script>
 
 <template>
@@ -65,9 +47,9 @@ const selectOptions = [
                     <InputLabel for="type" value="Type"/>
 
                     <!--                    @todo dropdown make route-->
-                    <select class="mt-1 block w-full" v-model="form.type">
-                        <option v-for="option in selectOptions" :value="option.value">
-                            {{ option.text }}
+                    <select class="mt-1 block w-full" v-model="form.type" required>
+                        <option v-for="option in props.types" :value="option.value">
+                            {{ option.label }}
                         </option>
                     </select>
 

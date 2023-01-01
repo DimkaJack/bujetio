@@ -31,6 +31,7 @@ defineProps(['transactions']);
                 <tr class="bg-gray-100">
                     <th class="px-4 py-2">Type</th>
                     <th class="px-4 py-2">Amount</th>
+                    <th class="px-4 py-2">Currency</th>
                     <th class="px-4 py-2">Product</th>
                     <th class="px-4 py-2">Category</th>
                     <th class="px-4 py-2">Created at</th>

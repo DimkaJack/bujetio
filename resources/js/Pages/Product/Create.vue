@@ -6,34 +6,18 @@ import TextInput from '@/Components/TextInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm, Head } from '@inertiajs/inertia-vue3';
 import CurrencyInput from "@/Components/CurrencyInput.vue";
+const props = defineProps({
+    types: Array,
+});
 
 const form = useForm({
     name: '',
     type: '',
-    startBalanceAmount: '',
+    startBalanceAmount: 0,
     startBalanceAmountCurrency: 'RUB', //@todo
-    balanceAmount: '',
+    balanceAmount: 0,
     balanceAmountCurency: 'RUB', //@todo
 });
-
-const selectOptions = [
-    {
-        text: 'Дебетовая карта',
-        value: 1,
-    },
-    {
-        text: 'Кредитная карта',
-        value: 2,
-    },
-    {
-        text: 'Кредит',
-        value: 3,
-    },
-    {
-        text: 'Счет',
-        value: 4,
-    },
-];
 </script>
 
 <template>
@@ -61,9 +45,9 @@ const selectOptions = [
                     <InputLabel for="type" value="Type" />
 
 <!--                    @todo dropdown make route-->
-                    <select class="mt-1 block w-full" v-model="form.type">
-                        <option v-for="option in selectOptions" :value="option.value">
-                            {{ option.text }}
+                    <select class="mt-1 block w-full" v-model="form.type" required>
+                        <option v-for="option in props.types" :value="option.value">
+                            {{ option.label }}
                         </option>
                     </select>
 
@@ -78,7 +62,7 @@ const selectOptions = [
                         type="text"
                         class="mt-1 block w-full"
                         v-model="form.startBalanceAmount"
-                        :options="{ currency: 'RUB' }"
+                        :options="{ currency: form.startBalanceAmountCurrency }"
                         required
                     />
 
@@ -93,7 +77,7 @@ const selectOptions = [
                         type="text"
                         class="mt-1 block w-full"
                         v-model="form.balanceAmount"
-                        :options="{ currency: 'RUB' }"
+                        :options="{ currency: form.balanceAmountCurency }"
                         required
                     />
 

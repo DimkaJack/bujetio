@@ -17,7 +17,7 @@ function destroy(id) {
     <tr>
         <td class="border px-4 py-2">{{ category.name }}</td>
         <td class="border px-4 py-2">{{ category.color }}</td>
-        <td class="border px-4 py-2">{{ new Date(category.created_at).toLocaleString() }}</td>
+        <td class="border px-4 py-2">{{ new Date(category.createdAt).toLocaleString() }}</td>
         <td class="border px-4 py-2">
             <Link
                 tabIndex="1"
