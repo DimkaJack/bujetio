@@ -4,15 +4,25 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Constants\TransactionTypeEnum;
 use App\Dto\Transaction\TransactionStoreDto;
 use App\Dto\Transaction\TransactionUpdateDto;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Ramsey\Uuid\Uuid;
 
+//@todo add db transactions
+//@todo extract balance change to standalone service
 final class TransactionService
 {
+    public function __construct(
+        private readonly ProductService $productService,
+    ) {
+        //
+    }
+
     public function getList(): Collection
     {
         /** @var User $user */
@@ -22,29 +32,60 @@ final class TransactionService
 
     public function store(TransactionStoreDto $dto): Transaction
     {
+        //@todo check product and transaction currency
+        //@todo transaction amount should always be positive
+
+        $product = $this->productService->get($dto->productId);
+
+        // create transaction
         $transaction = new Transaction();
         $transaction->type = $dto->type->value;
         //@todo change to normal relationship save
         $transaction->product_id = $dto->productId;
         $transaction->category_id = $dto->categoryId;
-        //@todo change to cast
-        $transaction->amount_amount = $dto->amount->getAmount();
-        $transaction->amount_currency = $dto->amount->getCurrency();
+        $transaction->amount = $dto->amount;
         $transaction->user()->associate(Auth::user());
         $transaction->save();
+
+        // change product balance
+        if ($dto->type === TransactionTypeEnum::INCOME) {
+            $product->balance = $product->balance->add($dto->amount);
+        } else {
+            $product->balance = $product->balance->subtract($dto->amount);
+        }
+        $product->save();
 
         return $transaction;
     }
 
     public function updateByTransaction(TransactionUpdateDto $dto, Transaction $transaction): Transaction
     {
-        $transaction->type = $dto->type->value;
+        //@todo check product and transaction currency
+        //@todo transaction amount should always be positive
+        //@todo add logic if transaction product not same as dto product
+        //@todo add transactions for each product
+
+        $product = $this->productService->get($dto->productId);
+
+        // @todo add logic when new type not same as old type
+        if ($dto->type === TransactionTypeEnum::INCOME) {
+            // rollback old transaction
+            $product->balance = $product->balance->subtract($transaction->amount);
+            // change product balance
+            $product->balance = $product->balance->add($dto->amount);
+        } else {
+            // rollback old transaction
+            $product->balance = $product->balance->add($transaction->amount);
+            // change product balance
+            $product->balance = $product->balance->subtract($dto->amount);
+        }
+        $product->save();
+
+        $transaction->type = $dto->type;
         //@todo change to normal relationship save
         $transaction->product_id = $dto->productId;
         $transaction->category_id = $dto->categoryId;
-        //@todo change to cast
-        $transaction->amount_amount = $dto->amount->getAmount();
-        $transaction->amount_currency = $dto->amount->getCurrency();
+        $transaction->amount = $dto->amount;
         $transaction->save();
 
         return $transaction;
@@ -52,6 +93,16 @@ final class TransactionService
 
     public function deleteByTransaction(Transaction $transaction): bool
     {
+        $product = $this->productService->get(Uuid::fromString($transaction->product_id));
+
+        // rollback old transaction
+        if ($transaction->type === TransactionTypeEnum::INCOME) {
+            $product->balance = $product->balance->subtract($transaction->amount);
+        } else {
+            $product->balance = $product->balance->add($transaction->amount);
+        }
+        $product->save();
+
         $transaction->delete();
 
         return true;

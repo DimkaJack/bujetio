@@ -22,12 +22,15 @@ final class TransactionUpdateDto
         //
     }
 
-    public static function fromRequest(Request $request): static
+    public static function fromRequest(Request $request): self
     {
-        return new static(
+        $transactionType = TransactionTypeEnum::from($request->input('type'));
+        $amount = money($request->input('amount'), currency($request->input('currency')));
+
+        return new self(
             id: isset($request->uuid) ? Uuid::fromString($request->uuid) : null,
-            type: TransactionTypeEnum::from($request->input('type')),
-            amount: money($request->input('amount'), currency($request->input('currency'))),
+            type: $transactionType,
+            amount: $amount,
             productId: Uuid::fromString($request->input('productId')),
             categoryId: Uuid::fromString($request->input('categoryId')),
         );

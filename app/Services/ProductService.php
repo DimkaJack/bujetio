@@ -9,6 +9,8 @@ use App\Dto\Product\ProductUpdateDto;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\UuidInterface;
 
@@ -19,6 +21,18 @@ final class ProductService
         /** @var User $user */
         $user = Auth::user();
         return $user->products;
+    }
+
+    /**
+     * @param UuidInterface $id
+     * @return HasMany|object|Product|null
+     */
+    public function get(UuidInterface $id): ?Product
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        return $user->products()->where('id', $id)->first();
     }
 
     public function store(ProductStoreDto $dto): Product
@@ -45,6 +59,7 @@ final class ProductService
 
     public function updateByProduct(ProductUpdateDto $dto, Product $product): Product
     {
+        //@todo create transaction when change balance
         $product->name = $dto->name;
         $product->type = $dto->type->value;
         $product->start_balance_amount = $dto->startBalance->getAmount();

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use App\Constants\TransactionTypeEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TransactionResource extends JsonResource
@@ -19,9 +18,12 @@ class TransactionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => TransactionTypeEnum::from($this->type)->label(),
-            'amount' => $this->amount_amount,
-            'amountCurrency' => $this->amount_currency,
+            'type' => [
+                'id' => $this->type->value,
+                'label' => $this->type->label(),
+            ],
+            'amount' => (int) $this->amount->getAmount(),
+            'amountCurrency' => $this->amount->getCurrency()->getCode(),
             'product' => new ProductResource($this->product),
             'category' => new CategoryResource($this->category),
             'createdAt' => $this->created_at,

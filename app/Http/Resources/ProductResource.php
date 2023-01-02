@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Constants\ProductTypeEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
@@ -18,7 +17,7 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'type' => ProductTypeEnum::from($this->type)->label(),
+            'type' => $this->type->label(),
             'startBalanceAmount' => $this->start_balance_amount,
             'startBalanceCurrency' => $this->start_balance_currency,
             'balanceAmount' => $this->balance_amount,

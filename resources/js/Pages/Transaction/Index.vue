@@ -7,7 +7,7 @@ defineProps(['transactions']);
 </script>
 
 <template>
-    <Head title="Products" />
+    <Head><title>Transactions</title></Head>
 
     <AuthenticatedLayout>
         <template #header>

@@ -21,11 +21,14 @@ final class TransactionStoreDto
         //
     }
 
-    public static function fromRequest(Request $request): static
+    public static function fromRequest(Request $request): self
     {
-        return new static(
-            type: TransactionTypeEnum::from($request->input('type')),
-            amount: money($request->input('amount'), currency($request->input('currency'))),
+        $transactionType = TransactionTypeEnum::from($request->input('type'));
+        $amount = money($request->input('amount'), currency($request->input('currency')));
+
+        return new self(
+            type: $transactionType,
+            amount: $amount,
             productId: Uuid::fromString($request->input('productId')),
             categoryId: Uuid::fromString($request->input('categoryId')),
         );
