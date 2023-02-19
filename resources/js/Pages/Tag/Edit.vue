@@ -12,6 +12,7 @@ const props = defineProps({
 
 const form = useForm({
     name: props.tag.name,
+    color: props.tag.name,
 });
 </script>
 
@@ -34,6 +35,20 @@ const form = useForm({
                     />
 
                     <InputError class="mt-2" :message="form.errors.name" />
+                </div>
+
+                <div>
+                    <InputLabel for="color" value="Color" />
+
+                    <TextInput
+                        id="color"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.color"
+                        required
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.color" />
                 </div>
 
                 <PrimaryButton class="mt-4">Save</PrimaryButton>

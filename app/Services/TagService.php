@@ -25,6 +25,7 @@ final class TagService
     {
         $tag = new Tag();
         $tag->name = $dto->name;
+        $tag->color = $dto->color;
         $tag->user()->associate(Auth::user());
         $tag->save();
 
@@ -35,6 +36,7 @@ final class TagService
     {
         $tag = Tag::find($dto->id);
         $tag->name = $dto->name;
+        $tag->color = $dto->color;
         $tag->save();
 
         return $tag;
@@ -43,6 +45,7 @@ final class TagService
     public function updateByTag(TagUpdateDto $dto, Tag $tag): Tag
     {
         $tag->name = $dto->name;
+        $tag->color = $dto->color;
         $tag->save();
 
         return $tag;

@@ -20,6 +20,8 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
+        "@radial-color-picker/vue-color-picker": "^5.0.1",
+        "verte": "^0.0.12",
         "vue-currency-input": "^3.0.3"
     }
 }

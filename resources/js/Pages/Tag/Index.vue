@@ -30,6 +30,7 @@ defineProps(['tags']);
                 <thead>
                 <tr class="bg-gray-100">
                     <th class="px-4 py-2">Name</th>
+                    <th class="px-4 py-2">Color</th>
                     <th class="px-4 py-2">Created at</th>
                     <th class="px-4 py-2">Action</th>
                 </tr>
