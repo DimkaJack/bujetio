@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin Eloquent
  * @property int $id
  * @property string $name
+ * @property string $color
  * @property string $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tag whereColor($value)
  * @property-read \App\Models\User $user
  */
 class Tag extends Model

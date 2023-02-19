@@ -10,6 +10,7 @@ final class TagStoreDto
 {
     public function __construct(
         public readonly string $name,
+        public readonly string $color,
     ) {
         //
     }
@@ -18,6 +19,7 @@ final class TagStoreDto
     {
         return new self(
             name: $request->input('name'),
+            color: $request->input('color'),
         );
     }
 }

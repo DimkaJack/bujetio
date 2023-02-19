@@ -19,7 +19,7 @@ final class CategoryStoreDto
     {
         return new static(
             name: $request->input('name'),
-            color:$request->input('color'),
+            color: $request->input('color'),
         );
     }
 }

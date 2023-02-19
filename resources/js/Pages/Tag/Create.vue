@@ -8,6 +8,7 @@ import { useForm, Head } from '@inertiajs/inertia-vue3';
 
 const form = useForm({
     name: '',
+    color: '',
 });
 </script>
 
@@ -30,6 +31,20 @@ const form = useForm({
                     />
 
                     <InputError class="mt-2" :message="form.errors.name" />
+                </div>
+
+                <div class="mt-4">
+                    <InputLabel for="color" value="Color" />
+
+                    <TextInput
+                        id="color"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.color"
+                        required
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.color" />
                 </div>
 
                 <PrimaryButton class="mt-4">Save</PrimaryButton>

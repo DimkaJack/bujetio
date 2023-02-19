@@ -13,6 +13,7 @@ final class TagUpdateDto
     public function __construct(
         public readonly ?UuidInterface $id,
         public readonly string $name,
+        public readonly string $color,
     ) {
         //
     }
@@ -22,6 +23,7 @@ final class TagUpdateDto
         return new self(
             id: isset($request->uuid) ? Uuid::fromString($request->uuid) : null,
             name: $request->input('name'),
+            color: $request->input('color'),
         );
     }
 }
