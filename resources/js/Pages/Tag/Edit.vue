@@ -42,8 +42,8 @@ const form = useForm({
 
                     <TextInput
                         id="color"
-                        type="text"
-                        class="mt-1 block w-full"
+                        type="color"
+                        class="mt-1 block w-full h-12"
                         v-model="form.color"
                         required
                     />

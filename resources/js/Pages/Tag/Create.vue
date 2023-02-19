@@ -8,7 +8,7 @@ import { useForm, Head } from '@inertiajs/inertia-vue3';
 
 const form = useForm({
     name: '',
-    color: '',
+    color: '#000000',
 });
 </script>
 
@@ -38,8 +38,8 @@ const form = useForm({
 
                     <TextInput
                         id="color"
-                        type="text"
-                        class="mt-1 block w-full"
+                        type="color"
+                        class="mt-1 block w-full h-12"
                         v-model="form.color"
                         required
                     />

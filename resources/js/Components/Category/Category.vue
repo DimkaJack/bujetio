@@ -16,7 +16,9 @@ function destroy(id) {
 
     <tr>
         <td class="border px-4 py-2">{{ category.name }}</td>
-        <td class="border px-4 py-2">{{ category.color }}</td>
+        <td class="border px-4 py-2">
+            <div class="box-border h-9 p-4 border-4 rounded" :style="`background-color: ${category.color}`"></div>
+        </td>
         <td class="border px-4 py-2">{{ new Date(category.createdAt).toLocaleString() }}</td>
         <td class="border px-4 py-2">
             <Link
