@@ -13,12 +13,12 @@ const props = defineProps({
 });
 
 const form = useForm({
-    name: props.product.name,
-    type: props.product.type,
-    startBalanceAmount: props.product.start_balance_amount,
-    startBalanceAmountCurrency: props.product.start_balance_amount_currency,
-    balanceAmount: props.product.balance_amount,
-    balanceAmountCurency: props.product.balance_amount_curency,
+    name: props.product.data.name,
+    type: props.product.data.type.id,
+    startBalanceAmount: props.product.data.startBalanceAmount,
+    startBalanceCurrency: props.product.data.startBalanceCurrency,
+    balanceAmount: props.product.data.balanceAmount,
+    balanceCurrency: props.product.data.balanceCurrency,
 });
 </script>
 
@@ -27,7 +27,7 @@ const form = useForm({
 
     <AuthenticatedLayout>
         <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-            <form @submit.prevent="form.put(route('products.update', props.product.id), { onSuccess: () => form.reset() })">
+            <form @submit.prevent="form.put(route('products.update', props.product.data.id), { onSuccess: () => form.reset() })">
                 <div>
                     <InputLabel for="name" value="Name"/>
 
@@ -64,7 +64,7 @@ const form = useForm({
                         type="text"
                         class="mt-1 block w-full"
                         v-model="form.startBalanceAmount"
-                        :options="{ currency: 'RUB' }"
+                        :options="{ currency: form.startBalanceCurrency }"
                         required
                     />
 
@@ -79,7 +79,7 @@ const form = useForm({
                         type="text"
                         class="mt-1 block w-full"
                         v-model="form.balanceAmount"
-                        :options="{ currency: 'RUB' }"
+                        :options="{ currency: form.balanceCurrency }"
                         required
                     />
 

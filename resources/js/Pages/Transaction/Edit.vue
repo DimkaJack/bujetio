@@ -14,12 +14,12 @@ const props = defineProps({
 });
 
 const form = useForm({
-    name: props.transaction.name,
-    type: props.transaction.type,
-    amount: props.transaction.amount_amount,
-    amountCurrency: props.transaction.amount_currency,
-    productId: props.transaction.product_id,
-    categoryId: props.transaction.category_id,
+    name: props.transaction.data.name,
+    type: props.transaction.data.type.id,
+    amount: props.transaction.data.amount,
+    amountCurrency: props.transaction.data.amountCurrency,
+    productId: props.transaction.data.product.id,
+    categoryId: props.transaction.data.category.id,
 });
 </script>
 
@@ -28,7 +28,7 @@ const form = useForm({
 
     <AuthenticatedLayout>
         <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-            <form @submit.prevent="form.put(route('transactions.update', props.transaction.id), { onSuccess: () => form.reset() })">
+            <form @submit.prevent="form.put(route('transactions.update', props.transaction.data.id), { onSuccess: () => form.reset() })">
                 <div>
                     <InputLabel for="type" value="Type" />
 

@@ -8,15 +8,12 @@ use App\Dto\Product\ProductUpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\Product\GetProductResource;
 use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
 use Inertia\Response;
-use Ramsey\Uuid\Uuid;
 
 class ProductController extends Controller
 {
@@ -29,7 +26,7 @@ class ProductController extends Controller
     public function index(): Response
     {
         return Inertia::render('Product/Index', [
-            'products' => ProductResource::collection($this->productService->getList())
+            'products' => GetProductResource::collection($this->productService->getList())
         ]);
     }
 
@@ -40,12 +37,6 @@ class ProductController extends Controller
         return Inertia::render('Product/Create', compact('types'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param StoreProductRequest $request
-     * @return ProductResource
-     */
     public function store(StoreProductRequest $request): RedirectResponse
     {
         $dto = ProductStoreDto::fromRequest($request);
@@ -65,20 +56,17 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Product $product): Response
     {
-        //@todo send resource to response
         $types = ProductTypeEnum::getList();
+        $productResource = new GetProductResource($product);
 
         return Inertia::render(
             'Product/Edit',
-            compact('product', 'types')
+            [
+                'product' => $productResource,
+                'types' => $types,
+            ]
         );
     }
 

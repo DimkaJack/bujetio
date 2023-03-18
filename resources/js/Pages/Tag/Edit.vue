@@ -12,7 +12,7 @@ const props = defineProps({
 
 const form = useForm({
     name: props.tag.name,
-    color: props.tag.name,
+    color: props.tag.color,
 });
 </script>
 

@@ -40,10 +40,8 @@ final class ProductService
         $product = new Product();
         $product->name = $dto->name;
         $product->type = $dto->type->value;
-        $product->start_balance_amount = $dto->startBalance->getAmount();
-        $product->start_balance_currency = $dto->startBalance->getCurrency();
-        $product->balance_amount = $dto->balance->getAmount();
-        $product->balance_currency = $dto->balance->getCurrency();
+        $product->startBalance = $dto->startBalance;
+        $product->balance = $dto->balance;
         $product->user()->associate(Auth::user());
         $product->save();
 
@@ -62,10 +60,8 @@ final class ProductService
         //@todo create transaction when change balance
         $product->name = $dto->name;
         $product->type = $dto->type->value;
-        $product->start_balance_amount = $dto->startBalance->getAmount();
-        $product->start_balance_currency = $dto->startBalance->getCurrency();
-        $product->balance_amount = $dto->balance->getAmount();
-        $product->balance_currency = $dto->balance->getCurrency();
+        $product->startBalance = $dto->startBalance;
+        $product->balance = $dto->balance;
         $product->save();
 
         return $product;

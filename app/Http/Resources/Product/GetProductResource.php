@@ -1,15 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
-namespace App\Http\Resources;
+namespace App\Http\Resources\Product;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TransactionResource extends JsonResource
+class GetProductResource extends JsonResource
 {
     /**
-     * Transform the resource collection into an array.
+     * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
@@ -18,14 +16,16 @@ class TransactionResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
             'type' => [
                 'id' => $this->type->value,
                 'label' => $this->type->label(),
             ],
-            'amount' => (int) $this->amount->getAmount(),
-            'amountCurrency' => $this->amount->getCurrency()->getCode(),
-            'product' => new ProductResource($this->product),
-            'category' => new CategoryResource($this->category),
+            'typeId' => $this->type->value,
+            'startBalanceAmount' => $this->startBalance->formatByDecimal(),
+            'startBalanceCurrency' => $this->startBalance->getCurrency(),
+            'balanceAmount' => $this->balance->formatByDecimal(),
+            'balanceCurrency' => $this->balance->getCurrency(),
             'createdAt' => $this->created_at,
         ];
     }

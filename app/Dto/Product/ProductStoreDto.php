@@ -24,13 +24,13 @@ final class ProductStoreDto
         return new static(
             name: $request->input('name'),
             type: ProductTypeEnum::from($request->input('type')),
-            startBalance: new Money(
+            startBalance: Money::parseByDecimal(
                 $request->input('startBalanceAmount'),
-                $request->input('startBalanceCurrency'),
+                currency($request->input('startBalanceCurrency')),
             ),
-            balance: new Money(
+            balance: Money::parseByDecimal(
                 $request->input('balanceAmount'),
-                $request->input('balanceCurrency'),
+                currency($request->input('balanceCurrency')),
             ),
         );
     }

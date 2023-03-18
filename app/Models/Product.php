@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Constants\ProductTypeEnum;
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Cknow\Money\Casts\MoneyDecimalCast;
 use Cknow\Money\Casts\MoneyIntegerCast;
 use Cknow\Money\Money;
 use Illuminate\Database\Eloquent\Casts\Attribute;

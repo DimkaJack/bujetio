@@ -7,7 +7,7 @@ use App\Dto\Product\ProductUpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\Product\GetProductResource;
 use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class ProductController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return ProductResource::collection($this->productService->getList());
+        return GetProductResource::collection($this->productService->getList());
     }
 
     /**
@@ -46,13 +46,13 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreProductRequest $request
-     * @return ProductResource
+     * @return GetProductResource
      */
-    public function store(StoreProductRequest $request): ProductResource
+    public function store(StoreProductRequest $request): GetProductResource
     {
         $dto = ProductStoreDto::fromRequest($request);
 
-        return new ProductResource($this->productService->store($dto));
+        return new GetProductResource($this->productService->store($dto));
     }
 
     /**
@@ -81,13 +81,13 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateProductRequest $request
-     * @return ProductResource
+     * @return \App\Http\Resources\Product\GetProductResource
      */
-    public function update(UpdateProductRequest $request): ProductResource
+    public function update(UpdateProductRequest $request): GetProductResource
     {
         $dto = ProductUpdateDto::fromRequest($request);
 
-        return new ProductResource($this->productService->update($dto));
+        return new GetProductResource($this->productService->update($dto));
     }
 
     /**

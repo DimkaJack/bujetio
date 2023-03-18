@@ -16,7 +16,12 @@ export default {
         options: Object
     },
     setup(props) {
-        const { inputRef } = useCurrencyInput(props.options)
+        const { inputRef } = useCurrencyInput(
+            Object.assign(props.options, {
+                locale: 'en-US',
+                // autoDecimalDigits: true,
+            })
+        )
 
         return { inputRef }
     }

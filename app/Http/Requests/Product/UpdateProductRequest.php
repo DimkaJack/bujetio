@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Product;
 
+use App\Constants\ProductTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -24,7 +27,34 @@ class UpdateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'type' => [
+                'required',
+                'numeric',
+                Rule::in(Arr::pluck(ProductTypeEnum::cases(), 'value')),
+            ],
+            'startBalanceAmount' => [
+                'required',
+                'numeric',
+            ],
+            'startBalanceCurrency' => [
+                'required',
+                'string',
+                'max:4',
+            ],
+            'balanceAmount' => [
+                'required',
+                'numeric',
+            ],
+            'balanceCurrency' => [
+                'required',
+                'string',
+                'max:4',
+            ],
         ];
     }
 }

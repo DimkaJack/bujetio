@@ -14,9 +14,9 @@ const form = useForm({
     name: '',
     type: '',
     startBalanceAmount: 0,
-    startBalanceAmountCurrency: 'RUB', //@todo
+    startBalanceCurrency: 'RUB', //@todo
     balanceAmount: 0,
-    balanceAmountCurency: 'RUB', //@todo
+    balanceCurrency: 'RUB', //@todo
 });
 </script>
 
@@ -62,7 +62,7 @@ const form = useForm({
                         type="text"
                         class="mt-1 block w-full"
                         v-model="form.startBalanceAmount"
-                        :options="{ currency: form.startBalanceAmountCurrency }"
+                        :options="{ currency: form.startBalanceCurrency }"
                         required
                     />
 
@@ -77,7 +77,7 @@ const form = useForm({
                         type="text"
                         class="mt-1 block w-full"
                         v-model="form.balanceAmount"
-                        :options="{ currency: form.balanceAmountCurency }"
+                        :options="{ currency: form.balanceCurrency }"
                         required
                     />
 

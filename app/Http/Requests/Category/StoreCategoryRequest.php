@@ -26,7 +26,18 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'color' => [
+                'required',
+                'string',
+                'max:255',
+                // validate hex color code
+                'regex:/^(#(?:[0-9a-f]{2}){2,4}|#[0-9a-f]{3})/i',
+            ],
         ];
     }
 }

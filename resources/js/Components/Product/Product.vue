@@ -15,9 +15,9 @@ function destroy(id) {
 <!--    //@todo extract balance to entity-->
     <tr>
         <td class="border px-4 py-2">{{ product.name }}</td>
-        <td class="border px-4 py-2">{{ product.type }}</td>
-        <td class="border px-4 py-2">{{ product.startBalanceAmount }}</td>
-        <td class="border px-4 py-2">{{ product.balanceAmount }}</td>
+        <td class="border px-4 py-2">{{ product.type.label }}</td>
+        <td class="border px-4 py-2">{{ product.startBalanceAmount }} {{ product.startBalanceCurrency }}</td>
+        <td class="border px-4 py-2">{{ product.balanceAmount }} {{ product.balanceCurrency }}</td>
         <td class="border px-4 py-2">{{ new Date(product.createdAt).toLocaleString() }}</td>
         <td class="border px-4 py-2">
             <Link

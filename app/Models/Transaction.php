@@ -55,9 +55,9 @@ class Transaction extends Model
     protected function amount(): Attribute
     {
         return Attribute::make(
-            get: fn ($value, $attributes) => new Money(
+            get: fn ($value, $attributes) => money(
                 $attributes['amount_amount'],
-                $attributes['amount_currency'],
+                currency($attributes['amount_currency']),
             ),
             set: fn (Money $value) => [
                 'amount_amount' => (int) $value->getAmount(),

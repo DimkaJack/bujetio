@@ -10,7 +10,7 @@ use App\Dto\Transaction\TransactionUpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
-use App\Http\Resources\TransactionResource;
+use App\Http\Resources\Transaction\GetTransactionResource;
 use App\Models\Transaction;
 use App\Services\CategoryService;
 use App\Services\ProductService;
@@ -32,7 +32,7 @@ final class TransactionController extends Controller
     public function index(): Response
     {
         return Inertia::render('Transaction/Index', [
-            'transactions' => TransactionResource::collection($this->transactionService->getList())
+            'transactions' => GetTransactionResource::collection($this->transactionService->getList())
         ]);
     }
 
@@ -67,19 +67,19 @@ final class TransactionController extends Controller
 
     public function edit(Transaction $transaction): Response
     {
-        //@todo send resource to response
         $categories = $this->categoryService->getList();
         $products = $this->productService->getList();
+        $transactionResource = new GetTransactionResource($transaction);
         $types = TransactionTypeEnum::getList();
 
         return Inertia::render(
             'Transaction/Edit',
-            compact(
-                'categories',
-                'products',
-                'transaction',
-                'types',
-            )
+            [
+                'categories' => $categories,
+                'products' => $products,
+                'transaction' => $transactionResource,
+                'types' => $types,
+            ]
         );
     }
 

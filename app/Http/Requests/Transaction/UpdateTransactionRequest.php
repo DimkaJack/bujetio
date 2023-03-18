@@ -2,7 +2,12 @@
 
 namespace App\Http\Requests\Transaction;
 
+use App\Constants\TransactionTypeEnum;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 
 class UpdateTransactionRequest extends FormRequest
 {
@@ -24,7 +29,28 @@ class UpdateTransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'type' => [
+                'required',
+                'numeric',
+                Rule::in(Arr::pluck(TransactionTypeEnum::cases(), 'value')),
+            ],
+            'amount' => [
+                'required',
+                'numeric',
+            ],
+            'amountCurrency' => [
+                'required',
+                'string',
+                'max:4',
+            ],
+            'productId' => [
+                'required',
+                Rule::exists(Product::class, 'id'),
+            ],
+            'categoryId' => [
+                'required',
+                Rule::exists(Category::class, 'id'),
+            ],
         ];
     }
 }
