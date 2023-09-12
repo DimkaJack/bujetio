@@ -2,8 +2,12 @@
 
 namespace App\Http\Resources\Product;
 
+use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin Product
+ */
 class GetProductResource extends JsonResource
 {
     /**
@@ -17,6 +21,7 @@ class GetProductResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            //@todo add Bank name
             'type' => [
                 'id' => $this->type->value,
                 'label' => $this->type->label(),

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Inertia\CategoryController;
+use App\Http\Controllers\Inertia\DashboardController;
 use App\Http\Controllers\Inertia\ProductController;
 use App\Http\Controllers\Inertia\TagController;
 use App\Http\Controllers\Inertia\TransactionController;
@@ -29,9 +30,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', DashboardController::class)
+    ->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('categories', CategoryController::class)
     ->middleware(['auth', 'verified']);

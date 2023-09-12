@@ -25,9 +25,7 @@ final class TransactionService
 
     public function getList(): Collection
     {
-        /** @var User $user */
-        $user = Auth::user();
-        return $user->transactions()->with(['product', 'category'])->get();
+        return $this->filtered();
     }
 
     public function store(TransactionStoreDto $dto): Transaction
@@ -110,5 +108,16 @@ final class TransactionService
         $transaction->delete();
 
         return true;
+    }
+
+    public function filtered(int $limit = 0): Collection
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        $transactions = $user->transactions()->with(['product', 'category']);
+        if ($limit > 0) {
+            $transactions->limit($limit);
+        }
+        return $transactions->get();
     }
 }
