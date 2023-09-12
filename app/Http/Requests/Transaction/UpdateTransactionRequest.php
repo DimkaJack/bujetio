@@ -34,6 +34,9 @@ class UpdateTransactionRequest extends FormRequest
                 'numeric',
                 Rule::in(Arr::pluck(TransactionTypeEnum::cases(), 'value')),
             ],
+            'name' => [
+                'required',
+            ],
             'amount' => [
                 'required',
                 'numeric',
@@ -50,6 +53,10 @@ class UpdateTransactionRequest extends FormRequest
             'categoryId' => [
                 'required',
                 Rule::exists(Category::class, 'id'),
+            ],
+            'payDate' => [
+                'required',
+                'date',
             ],
         ];
     }

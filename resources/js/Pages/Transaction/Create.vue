@@ -5,6 +5,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm, Head } from '@inertiajs/inertia-vue3';
 import CurrencyInput from "@/Components/CurrencyInput.vue";
+import TextInput from "@/Components/TextInput.vue";
 
 const props = defineProps({
     categories: Object,
@@ -14,10 +15,12 @@ const props = defineProps({
 
 const form = useForm({
     type: '',
+    name: '',
     amount: 0,
     amountCurrency: 'RUB', //@todo
     productId: '', //@todo
     categoryId: '', //@todo
+    payDate: '', //@todo
 });
 </script>
 
@@ -38,6 +41,21 @@ const form = useForm({
                     </select>
 
                     <InputError class="mt-2" :message="form.errors.type" />
+                </div>
+
+                <div>
+                    <InputLabel for="name" value="Name" />
+
+                    <TextInput
+                        id="name"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.name"
+                        required
+                        autofocus
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.name" />
                 </div>
 
                 <div class="mt-4">
@@ -79,6 +97,21 @@ const form = useForm({
                     </select>
 
                     <InputError class="mt-2" :message="form.errors.category" />
+                </div>
+
+                <div>
+                    <InputLabel for="payDate" value="Pay date" />
+
+                    <TextInput
+                        id="payDate"
+                        type="datetime-local"
+                        class="mt-1 block w-full"
+                        v-model="form.payDate"
+                        required
+                        autofocus
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.payDate" />
                 </div>
 
                 <PrimaryButton class="mt-4">Save</PrimaryButton>

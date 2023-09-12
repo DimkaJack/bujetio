@@ -40,10 +40,12 @@ final class TransactionService
         // create transaction
         $transaction = new Transaction();
         $transaction->type = $dto->type->value;
+        $transaction->name = $dto->name;
         //@todo change to normal relationship save
         $transaction->product_id = $dto->productId;
         $transaction->category_id = $dto->categoryId;
         $transaction->amount = $dto->amount;
+        $transaction->pay_date = $dto->payDate;
         $transaction->user()->associate(Auth::user());
         $transaction->save();
 
@@ -82,10 +84,12 @@ final class TransactionService
         $product->save();
 
         $transaction->type = $dto->type;
+        $transaction->name = $dto->name;
         //@todo change to normal relationship save
         $transaction->product_id = $dto->productId;
         $transaction->category_id = $dto->categoryId;
         $transaction->amount = $dto->amount;
+        $transaction->pay_date = $dto->payDate;
         $transaction->save();
 
         return $transaction;

@@ -16,11 +16,13 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id');
             $table->integer('type');
+            $table->string('name');
             $table->foreignUuid('product_id')->constrained('products');
             $table->foreignUuid('category_id')->constrained('categories');
             $table->foreignUuid('user_id')->constrained('users');
             $table->integer('amount_amount');
             $table->string('amount_currency');
+            $table->timestamp('pay_date');
             $table->timestamps();
 
             $table->primary('id');

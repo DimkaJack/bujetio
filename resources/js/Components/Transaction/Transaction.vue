@@ -14,10 +14,12 @@ function destroy(id) {
 <!--    //@todo extract balance to entity-->
     <tr>
         <td class="border px-4 py-2">{{ transaction.type.label }}</td>
+        <td class="border px-4 py-2">{{ transaction.name }}</td>
         <td class="border px-4 py-2">{{ transaction.type.id === 2 ? '-' : '' }}{{ transaction.amount }}</td>
         <td class="border px-4 py-2">{{ transaction.amountCurrency }}</td>
         <td class="border px-4 py-2">{{ transaction.product.name }}</td>
         <td class="border px-4 py-2">{{ transaction.category.name }}</td>
+        <td class="border px-4 py-2">{{ new Date(transaction.payDate).toLocaleString() }}</td>
         <td class="border px-4 py-2">{{ new Date(transaction.createdAt).toLocaleString() }}</td>
         <td class="border px-4 py-2">
             <Link

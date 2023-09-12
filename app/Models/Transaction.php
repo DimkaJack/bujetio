@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $amount_amount
  * @property string $amount_currency
  * @property Money $amount
+ * @property string $name
+ * @property string $pay_date
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Category $category
@@ -40,6 +42,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction wherePayDate($value)
  * @mixin Eloquent
  */
 class Transaction extends Model
