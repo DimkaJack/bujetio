@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('start_balance_currency');
             $table->integer('balance_amount');
             $table->string('balance_currency');
+            $table->integer('bank_loan_amount');
             $table->foreignUuid('user_id')->constrained('users');
             $table->timestamps();
 

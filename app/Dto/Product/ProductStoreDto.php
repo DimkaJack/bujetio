@@ -15,6 +15,7 @@ final class ProductStoreDto
         public readonly ProductTypeEnum $type,
         public readonly Money $startBalance,
         public readonly Money $balance,
+        public readonly Money $bankLoan,
     ) {
         //
     }
@@ -30,6 +31,10 @@ final class ProductStoreDto
             ),
             balance: Money::parseByDecimal(
                 $request->input('balanceAmount'),
+                currency($request->input('balanceCurrency')),
+            ),
+            bankLoan: Money::parseByDecimal(
+                $request->input('bankLoanAmount'),
                 currency($request->input('balanceCurrency')),
             ),
         );

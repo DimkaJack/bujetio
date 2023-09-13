@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $amount_amount
  * @property string $amount_currency
  * @property Money $amount
+ * @todo add old balance and new balance
  * @property string $name
  * @property string $pay_date
  * @property \Illuminate\Support\Carbon|null $created_at

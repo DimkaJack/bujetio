@@ -42,6 +42,7 @@ final class ProductService
         $product->type = $dto->type->value;
         $product->startBalance = $dto->startBalance;
         $product->balance = $dto->balance;
+        $product->bankLoan = $dto->bankLoan;
         $product->user()->associate(Auth::user());
         $product->save();
 
@@ -62,6 +63,7 @@ final class ProductService
         $product->type = $dto->type->value;
         $product->startBalance = $dto->startBalance;
         $product->balance = $dto->balance;
+        $product->bankLoan = $dto->bankLoan;
         $product->save();
 
         return $product;

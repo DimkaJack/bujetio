@@ -33,6 +33,7 @@ defineProps(['products']);
                     <th class="px-4 py-2">Type</th>
                     <th class="px-4 py-2">Start balance</th>
                     <th class="px-4 py-2">Balance</th>
+                    <th class="px-4 py-2">Loan</th>
                     <th class="px-4 py-2">Created at</th>
                     <th class="px-4 py-2">Action</th>
                 </tr>

@@ -6,6 +6,7 @@ import TextInput from '@/Components/TextInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import {useForm, Head} from '@inertiajs/inertia-vue3';
 import CurrencyInput from "@/Components/CurrencyInput.vue";
+import {computed} from "vue";
 
 const props = defineProps({
     product: Object,
@@ -19,7 +20,12 @@ const form = useForm({
     startBalanceCurrency: props.product.data.startBalanceCurrency,
     balanceAmount: props.product.data.balanceAmount,
     balanceCurrency: props.product.data.balanceCurrency,
+    bankLoanAmount: props.product.data.bankLoanAmount,
 });
+
+const isCredit = computed(() =>
+    [2, 3].includes(form.type)
+);
 </script>
 
 <template>
@@ -68,7 +74,7 @@ const form = useForm({
                         required
                     />
 
-                    <InputError class="mt-2" :message="form.errors.color"/>
+                    <InputError class="mt-2" :message="form.errors.startBalanceAmount"/>
                 </div>
 
                 <div class="mt-4">
@@ -83,7 +89,23 @@ const form = useForm({
                         required
                     />
 
-                    <InputError class="mt-2" :message="form.errors.color"/>
+                    <InputError class="mt-2" :message="form.errors.balanceAmount"/>
+                </div>
+
+                <!--                @todo create constants-->
+                <div class="mt-4" v-if="isCredit">
+                    <InputLabel for="bankLoanAmount" value="Bank loan amount" />
+
+                    <CurrencyInput
+                        id="bankLoanAmount"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.bankLoanAmount"
+                        :options="{ currency: form.balanceCurrency }"
+                        required
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.bankLoanAmount" />
                 </div>
 
                 <PrimaryButton class="mt-4">Save</PrimaryButton>

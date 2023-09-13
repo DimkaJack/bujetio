@@ -19,8 +19,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property ProductTypeEnum $type
  * @property Money $startBalance
- * @property int $start_balance_amount
- * @property string $start_balance_currency
+ * @property int $start_balance_amount // for calculate balance after each transaction (start balance + all transactions = balance)
+ * @property string $start_balance_currency //@todo change to balance_currency
+ * @property Money $bankLoan
+ * @property int $bank_loan_amount
  * @property Money $balance
  * @property int $balance_amount
  * @property string $balance_currency
@@ -85,6 +87,20 @@ class Product extends Model
             set: fn (Money $value) => [
                 'start_balance_amount' => (int) $value->getAmount(),
                 'start_balance_currency' => $value->getCurrency()->getCode(),
+            ],
+        );
+    }
+
+    protected function bankLoan(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => money(
+                $attributes['bank_loan_amount'],
+                currency($attributes['balance_currency']),
+            ),
+            set: fn (Money $value) => [
+                'bank_loan_amount' => (int) $value->getAmount(),
+                'balance_currency' => $value->getCurrency()->getCode(),
             ],
         );
     }

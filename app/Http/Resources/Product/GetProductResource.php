@@ -31,6 +31,7 @@ class GetProductResource extends JsonResource
             'startBalanceCurrency' => $this->startBalance->getCurrency(),
             'balanceAmount' => $this->balance->formatByDecimal(),
             'balanceCurrency' => $this->balance->getCurrency(),
+            'bankLoanAmount' => $this->bankLoan->formatByDecimal(),
             'createdAt' => $this->created_at,
         ];
     }

@@ -55,6 +55,11 @@ class UpdateProductRequest extends FormRequest
                 'string',
                 'max:4',
             ],
+            'bankLoanAmount' => [
+                'requiredIf:type,' . ProductTypeEnum::CREDIT_LOAN->value,
+                'requiredIf:type,' . ProductTypeEnum::CREDIT_LOAN->value,
+                'numeric',
+            ],
         ];
     }
 }

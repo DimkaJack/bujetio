@@ -25,6 +25,7 @@ class ProductFactory extends Factory
             'start_balance_currency' => 'RUB',
             'balance_amount' => 0,
             'balance_currency' => 'RUB',
+            'bank_loan_amount' => 0,
         ];
     }
 }
