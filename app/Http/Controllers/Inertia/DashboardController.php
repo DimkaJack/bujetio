@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Product\GetProductResource;
 use App\Http\Resources\Transaction\GetTransactionResource;
+use App\Services\BudgetService;
 use App\Services\ProductService;
 use App\Services\TransactionService;
 use Inertia\Inertia;
@@ -17,6 +18,7 @@ class DashboardController extends Controller
     public function __construct(
         private readonly TransactionService $transactionService,
         private readonly ProductService $productService,
+        private readonly BudgetService $budgetService,
     ) {
         //
     }
@@ -24,6 +26,7 @@ class DashboardController extends Controller
     public function __invoke(): Response
     {
         return Inertia::render('Dashboard', [
+            'budgets' => $this->budgetService->getBudget(),
             'transactions' => GetTransactionResource::collection($this->transactionService->filtered(5)),
             'products' => GetProductResource::collection($this->productService->getList())
         ]);

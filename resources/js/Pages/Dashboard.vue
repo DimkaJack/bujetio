@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head} from '@inertiajs/inertia-vue3';
 
-defineProps(['products', 'transactions']);
+defineProps(['products', 'transactions', 'budgets']);
 </script>
 
 <template>
@@ -35,11 +35,11 @@ defineProps(['products', 'transactions']);
                     </div>
                     <div class="p-6 text-gray-900">
                         <span>WIP</span>
-                        <h3 class="text-lg font-semibold pb-4">Budget: </h3>
+                        <h3 class="text-lg font-semibold pb-4">Budget(month): </h3>
                         <ul>
-                            <li>income: 5 000</li>
-                            <li>outcome: 500</li>
-                            <li>profit: 4 500</li>
+                            <li>income: {{ budgets.income.amount }} {{ budgets.income.currency }}</li>
+                            <li>outcome: {{ budgets.outcome.amount }} {{ budgets.outcome.currency }}</li>
+                            <li>balance: {{ budgets.balance.amount }} {{ budgets.balance.currency }}</li>
                         </ul>
                     </div>
                 </div>
