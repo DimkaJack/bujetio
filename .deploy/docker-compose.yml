@@ -2,8 +2,10 @@ version: '3.8'
 
 services:
     app:
-        image: php:8.1-fpm
         container_name: bujetio_php
+        build:
+            context: ./
+            dockerfile: ./Dockerfile
         restart: unless-stopped
         working_dir: /var/www
         env_file:
