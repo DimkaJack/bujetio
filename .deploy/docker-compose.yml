@@ -6,6 +6,8 @@ services:
         container_name: bujetio_app
         restart: unless-stopped
         working_dir: /var/www
+        env_file:
+            -   ./../.env
         volumes:
             - ./../:/var/www
             - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
@@ -21,6 +23,8 @@ services:
     nginx:
         image: nginx:alpine
         container_name: nginx_server
+        env_file:
+            -   ./../.env
         restart: unless-stopped
         ports:
             - "${FORWARD_NGINX_PORT:-80}:80"
@@ -36,6 +40,8 @@ services:
         image: mysql:8.0
         container_name: mysql_db
         restart: unless-stopped
+        env_file:
+            -   ./../.env
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ROOT_HOST: "${DB_HOST}"
