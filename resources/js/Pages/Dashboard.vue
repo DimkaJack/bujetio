@@ -37,9 +37,18 @@ defineProps(['products', 'transactions', 'budgets']);
                         <span>WIP</span>
                         <h3 class="text-lg font-semibold pb-4">Budget(month): </h3>
                         <ul>
-                            <li>income: {{ budgets.income.amount }} {{ budgets.income.currency }}</li>
-                            <li>outcome: {{ budgets.outcome.amount }} {{ budgets.outcome.currency }}</li>
-                            <li>balance: {{ budgets.balance.amount }} {{ budgets.balance.currency }}</li>
+                            <li>income: {{ budgets.monthly.income.amount }} {{ budgets.monthly.income.currency }}</li>
+                            <li>outcome: {{ budgets.monthly.outcome.amount }} {{ budgets.monthly.outcome.currency }}</li>
+                            <li>balance: {{ budgets.monthly.balance.amount }} {{ budgets.monthly.balance.currency }}</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 text-gray-900">
+                        <span>WIP</span>
+                        <h3 class="text-lg font-semibold pb-4">Budget(total): </h3>
+                        <ul>
+                            <li>allowed balance: {{ budgets.total.income.amount }} {{ budgets.total.income.currency }}</li>
+                            <li>current debt: {{ budgets.total.outcome.amount }} {{ budgets.total.outcome.currency }}</li>
+                            <li>balance: {{ budgets.total.balance.amount }} {{ budgets.total.balance.currency }}</li>
                         </ul>
                     </div>
                 </div>
