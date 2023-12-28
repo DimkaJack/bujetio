@@ -50,18 +50,21 @@ defineProps(['products', 'transactions', 'budgets']);
                                 <MoneyFormatter
                                     :value="budgets.monthly.income.amount"
                                     :currency="budgets.monthly.income.currency"
+                                    :need-divide="true"
                                 />
                             </li>
                             <li>outcome:
                                 <MoneyFormatter
                                     :value="budgets.monthly.outcome.amount"
                                     :currency="budgets.monthly.outcome.currency"
+                                    :need-divide="true"
                                 />
                             </li>
                             <li>balance:
                                 <MoneyFormatter
                                     :value="budgets.monthly.balance.amount"
                                     :currency="budgets.monthly.balance.currency"
+                                    :need-divide="true"
                                 />
                             </li>
                         </ul>
@@ -74,18 +77,21 @@ defineProps(['products', 'transactions', 'budgets']);
                                 <MoneyFormatter
                                     :value="budgets.total.income.amount"
                                     :currency="budgets.total.income.currency"
+                                    :need-divide="true"
                                 />
                             </li>
                             <li>Current debt:
                                 <MoneyFormatter
                                     :value="budgets.total.outcome.amount"
                                     :currency="budgets.total.outcome.currency"
+                                    :need-divide="true"
                                 />
                             </li>
                             <li>Balance:
                                 <MoneyFormatter
                                     :value="budgets.total.balance.amount"
                                     :currency="budgets.total.balance.currency"
+                                    :need-divide="true"
                                 />
                             </li>
                         </ul>

@@ -1,14 +1,16 @@
 <script setup>
 import { computed } from "vue";
 
-const props = defineProps(['value', 'currency']);
+//@todo fix need divide
+const props = defineProps(['value', 'currency', 'needDivide']);
 const formattedValue = computed(() => {
     let formatter = new Intl.NumberFormat('ru-RU', {
         style: 'currency',
         currency: props.currency,
         currencyDisplay: 'narrowSymbol'
     });
-    return formatter.format(props.value);
+    let value = props.needDivide ? props.value / 100 : props.value;
+    return formatter.format(value);
 });
 </script>
 
