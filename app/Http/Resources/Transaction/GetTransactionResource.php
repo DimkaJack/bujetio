@@ -6,7 +6,10 @@ namespace App\Http\Resources\Transaction;
 
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\Product\GetProductResource;
+use App\Http\Resources\TagResource;
 use App\Models\Transaction;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -17,8 +20,8 @@ class GetTransactionResource extends JsonResource
     /**
      * Transform the resource collection into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @param  Request  $request
+     * @return array|Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
@@ -34,6 +37,7 @@ class GetTransactionResource extends JsonResource
             'product' => new GetProductResource($this->product),
             'category' => new CategoryResource($this->category),
             'payDate' => $this->pay_date,
+            'tags' => TagResource::collection($this->tags),
             'createdAt' => $this->created_at,
         ];
     }

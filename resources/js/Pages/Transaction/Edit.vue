@@ -11,6 +11,7 @@ const props = defineProps({
     categories: Object,
     products: Object,
     transaction: Object,
+    tags: Object,
     types: Array,
 });
 
@@ -22,6 +23,7 @@ const form = useForm({
     productId: props.transaction.data.product.id,
     categoryId: props.transaction.data.category.id,
     payDate: props.transaction.data.payDate,
+    tags: props.transaction.data.tags.map(tag => tag.id),
 });
 </script>
 
@@ -93,6 +95,18 @@ const form = useForm({
                     <!--                    @todo dropdown make route-->
                     <select class="mt-1 block w-full" v-model="form.categoryId" required>
                         <option v-for="option in props.categories" :value="option.id">
+                            {{ option.name }}
+                        </option>
+                    </select>
+
+                    <InputError class="mt-2" :message="form.errors.category" />
+                </div>
+
+                <div>
+                    <InputLabel for="tags" value="Tags" />
+                    <!--                    @todo dropdown make route-->
+                    <select class="mt-1 block w-full" v-model="form.tags" multiple required>
+                        <option v-for="option in props.tags" :value="option.id">
                             {{ option.name }}
                         </option>
                     </select>

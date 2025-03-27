@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
-use App\Constants\ProductTypeEnum;
 use App\Constants\TransactionTypeEnum;
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Cknow\Money\Money;
+use Database\Factories\TransactionFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Models\Transaction
@@ -27,24 +31,25 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $pay_date
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Category $category
- * @property-read \App\Models\Product $product
- * @property-read \App\Models\User $user
- * @method static \Database\Factories\TransactionFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction query()
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereAmountAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereAmountCurrency($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCategoryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereProductId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction wherePayDate($value)
+ * @property-read Category $category
+ * @property-read Product $product
+ * @property-read User $user
+ * @property-read Collection<int, Tag> $tags
+ * @method static TransactionFactory factory(...$parameters)
+ * @method static Builder|Transaction newModelQuery()
+ * @method static Builder|Transaction newQuery()
+ * @method static Builder|Transaction query()
+ * @method static Builder|Transaction whereAmountAmount($value)
+ * @method static Builder|Transaction whereAmountCurrency($value)
+ * @method static Builder|Transaction whereCategoryId($value)
+ * @method static Builder|Transaction whereCreatedAt($value)
+ * @method static Builder|Transaction whereId($value)
+ * @method static Builder|Transaction whereProductId($value)
+ * @method static Builder|Transaction whereType($value)
+ * @method static Builder|Transaction whereUpdatedAt($value)
+ * @method static Builder|Transaction whereUserId($value)
+ * @method static Builder|Transaction whereName($value)
+ * @method static Builder|Transaction wherePayDate($value)
  * @mixin Eloquent
  */
 class Transaction extends Model
@@ -70,18 +75,23 @@ class Transaction extends Model
             ],
         );
     }
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function product()
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

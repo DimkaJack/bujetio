@@ -5,6 +5,7 @@ namespace App\Http\Requests\Transaction;
 use App\Constants\TransactionTypeEnum;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
@@ -57,6 +58,13 @@ class UpdateTransactionRequest extends FormRequest
             'payDate' => [
                 'required',
                 'date',
+            ],
+            'tags' => [
+                'array',
+            ],
+            'tags.*' => [
+                'string',
+                Rule::exists(Tag::class, 'id'),
             ],
         ];
     }

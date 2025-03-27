@@ -10,6 +10,7 @@ import TextInput from "@/Components/TextInput.vue";
 const props = defineProps({
     categories: Object,
     products: Object,
+    tags: Object,
     types: Array,
 });
 
@@ -21,6 +22,7 @@ const form = useForm({
     productId: '', //@todo
     categoryId: '', //@todo
     payDate: '', //@todo
+    tags: [], //@todo
 });
 </script>
 
@@ -97,6 +99,19 @@ const form = useForm({
                     </select>
 
                     <InputError class="mt-2" :message="form.errors.category" />
+                </div>
+
+                <div>
+                    <InputLabel for="tags" value="Tags" />
+
+                    <!--                    @todo dropdown make route-->
+                    <select class="mt-1 block w-full" v-model="form.tags" multiple required>
+                        <option v-for="option in props.tags" :value="option.id">
+                            {{ option.name }}
+                        </option>
+                    </select>
+
+                    <InputError class="mt-2" :message="form.errors.tags" />
                 </div>
 
                 <div>

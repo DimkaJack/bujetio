@@ -14,6 +14,7 @@ use App\Http\Resources\Transaction\GetTransactionResource;
 use App\Models\Transaction;
 use App\Services\CategoryService;
 use App\Services\ProductService;
+use App\Services\TagService;
 use App\Services\TransactionService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -25,6 +26,7 @@ final class TransactionController extends Controller
         private readonly CategoryService $categoryService,
         private readonly ProductService $productService,
         private readonly TransactionService $transactionService,
+        private readonly TagService $tagService,
     ) {
         //
     }
@@ -40,6 +42,7 @@ final class TransactionController extends Controller
     {
         $categories = $this->categoryService->getList();
         $products = $this->productService->getList();
+        $tags = $this->tagService->getList();
         $types = TransactionTypeEnum::getList();
 
         return Inertia::render(
@@ -47,6 +50,7 @@ final class TransactionController extends Controller
             compact(
                 'categories',
                 'products',
+                'tags',
                 'types',
             )
         );
@@ -70,6 +74,7 @@ final class TransactionController extends Controller
         $categories = $this->categoryService->getList();
         $products = $this->productService->getList();
         $transactionResource = new GetTransactionResource($transaction);
+        $tags = $this->tagService->getList();
         $types = TransactionTypeEnum::getList();
 
         return Inertia::render(
@@ -78,6 +83,7 @@ final class TransactionController extends Controller
                 'categories' => $categories,
                 'products' => $products,
                 'transaction' => $transactionResource,
+                'tags' => $tags,
                 'types' => $types,
             ]
         );

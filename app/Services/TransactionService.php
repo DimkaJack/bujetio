@@ -47,6 +47,8 @@ final class TransactionService
         $transaction->user()->associate(Auth::user());
         $transaction->save();
 
+        $transaction->tags()->sync($dto->tags);
+
         // change product balance
         if ($dto->type === TransactionTypeEnum::INCOME) {
             $product->balance = $product->balance->add($dto->amount);
@@ -88,6 +90,7 @@ final class TransactionService
         $transaction->category_id = $dto->categoryId;
         $transaction->amount = $dto->amount;
         $transaction->pay_date = $dto->payDate;
+        $transaction->tags()->sync($dto->tags);
         $transaction->save();
 
         return $transaction;

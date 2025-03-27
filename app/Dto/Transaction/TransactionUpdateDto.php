@@ -20,7 +20,8 @@ final class TransactionUpdateDto
         public readonly Money $amount,
         public readonly UuidInterface $productId,
         public readonly UuidInterface $categoryId,
-        public readonly Carbon $payDate
+        public readonly Carbon $payDate,
+        public readonly array $tags = [],
     ) {
         //
     }
@@ -38,6 +39,7 @@ final class TransactionUpdateDto
             productId: Uuid::fromString($request->input('productId')),
             categoryId: Uuid::fromString($request->input('categoryId')),
             payDate: new Carbon($request->input('payDate')),
+            tags: $request->input('tags', []),
         );
     }
 }
