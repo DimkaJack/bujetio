@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignUuid('product_id')->constrained('products');
             $table->foreignUuid('category_id')->constrained('categories');
             $table->foreignUuid('user_id')->constrained('users');
-            $table->integer('amount_amount');
+            $table->bigInteger('amount_amount');
             $table->string('amount_currency');
             $table->timestamp('pay_date');
             $table->timestamps();

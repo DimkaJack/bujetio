@@ -20,22 +20,22 @@ class TagSeeder extends Seeder
 
         Tag::factory()->create([
             'name' => 'Bank A',
-            'color' => 'green',
+            'color' => '#00FF00',
             'user_id' => $userId,
         ]);
         Tag::factory()->create([
             'name' => 'Bank B',
-            'color' => 'yellow',
+            'color' => '#FFFF00',
             'user_id' => $userId,
         ]);
         Tag::factory()->create([
             'name' => 'Cruise',
-            'color' => 'red',
+            'color' => '#FF0000',
             'user_id' => $userId,
         ]);
         Tag::factory()->create([
             'name' => 'Зарплата',
-            'color' => 'blue',
+            'color' => '#0000FF',
             'user_id' => $userId,
         ]);
     }

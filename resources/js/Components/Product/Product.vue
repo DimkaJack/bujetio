@@ -23,7 +23,7 @@ function destroy(id) {
         <td class="border px-4 py-2">
             <Link
                 tabIndex="1"
-                class="px-4 py-2 text-sm text-white bg-blue-500 rounded"
+                class="mx-1 px-4 py-2 text-sm text-white bg-blue-500 rounded"
                 :href="route('products.edit', product.id)"
             >
                 Edit
@@ -33,7 +33,7 @@ function destroy(id) {
                 @click="destroy(product.id)"
                 tabIndex="-1"
                 type="button"
-                class="mx-1 px-4 py-2 text-sm text-white bg-red-500 rounded"
+                class="mx-1 my-2 px-4 py-2 text-sm text-white bg-red-500 rounded"
             >
                 Delete
             </button>

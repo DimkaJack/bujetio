@@ -20,17 +20,17 @@ class CategorySeeder extends Seeder
 
         Category::factory()->create([
             'name' => 'Переводы',
-            'color' => 'green',
+            'color' => '#00FF00',
             'user_id' => $userid,
         ]);
         Category::factory()->create([
             'name' => 'ЖКХ',
-            'color' => 'blue',
+            'color' => '#0000FF',
             'user_id' => $userid,
         ]);
         Category::factory()->create([
             'name' => 'Продукты',
-            'color' => 'red',
+            'color' => '#FF0000',
             'user_id' => $userid,
         ]);
     }
