@@ -3,18 +3,21 @@
 namespace App\Http\Requests\Product;
 
 use App\Constants\ProductTypeEnum;
+use App\Contracts\DtoContract;
+use App\Http\Requests\BaseFormRequest;
+use App\Http\Requests\Product\Dto\ProductUpdateDto;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
-class UpdateProductRequest extends FormRequest
+class UpdateProductRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,7 +27,7 @@ class UpdateProductRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => [
@@ -61,5 +64,10 @@ class UpdateProductRequest extends FormRequest
                 'numeric',
             ],
         ];
+    }
+
+    public function getDto(): ProductUpdateDto
+    {
+        return ProductUpdateDto::fromRequest($this);
     }
 }

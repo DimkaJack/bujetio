@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Dto\Product\ProductStoreDto;
-use App\Dto\Product\ProductUpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
@@ -50,15 +48,17 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request): GetProductResource
     {
-        $dto = ProductStoreDto::fromRequest($request);
-
-        return new GetProductResource($this->productService->store($dto));
+        return new GetProductResource(
+            $this->productService->store(
+                dto: $request->getDto(),
+            )
+        );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
     public function show(Product $product)
@@ -69,7 +69,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product)
@@ -85,9 +85,11 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request): GetProductResource
     {
-        $dto = ProductUpdateDto::fromRequest($request);
-
-        return new GetProductResource($this->productService->update($dto));
+        return new GetProductResource(
+            $this->productService->update(
+                dto: $request->getDto(),
+            )
+        );
     }
 
     /**

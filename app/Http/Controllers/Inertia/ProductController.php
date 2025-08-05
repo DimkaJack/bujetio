@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Inertia;
 
 use App\Constants\ProductTypeEnum;
-use App\Dto\Product\ProductStoreDto;
-use App\Dto\Product\ProductUpdateDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\Dto\ProductStoreDto;
+use App\Http\Requests\Product\Dto\ProductUpdateDto;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Resources\Product\GetProductResource;
@@ -15,7 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ProductController extends Controller
+final class ProductController extends Controller
 {
     public function __construct(
         private readonly ProductService $productService,
@@ -39,8 +39,9 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request): RedirectResponse
     {
-        $dto = ProductStoreDto::fromRequest($request);
-        $this->productService->store($dto);
+        $this->productService->store(
+            dto: ProductStoreDto::fromRequest($request)
+        );
 
         return redirect()->route('products.index');
     }
@@ -72,15 +73,19 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
-        $dto = ProductUpdateDto::fromRequest($request);
-        $this->productService->updateByProduct($dto, $product);
+        $this->productService->updateByProduct(
+            dto: ProductUpdateDto::fromRequest($request),
+            product: $product
+        );
 
         return redirect()->route('products.index');
     }
 
     public function destroy(Product $product): RedirectResponse
     {
-        $this->productService->deleteByProduct($product);
+        $this->productService->deleteByProduct(
+            product: $product
+        );
 
         return redirect()->route('products.index');
     }
