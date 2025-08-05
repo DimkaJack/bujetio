@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Dto\Tag\TagStoreDto;
-use App\Dto\Tag\TagUpdateDto;
+use App\Http\Requests\Tag\Dto\TagStoreDto;
+use App\Http\Requests\Tag\Dto\TagUpdateDto;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Inertia;
 
-use App\Dto\Tag\TagStoreDto;
-use App\Dto\Tag\TagUpdateDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tag\Dto\TagStoreDto;
+use App\Http\Requests\Tag\Dto\TagUpdateDto;
 use App\Http\Requests\Tag\StoreTagRequest;
 use App\Http\Requests\Tag\UpdateTagRequest;
 use App\Http\Resources\TagResource;
@@ -36,8 +36,9 @@ class TagController extends Controller
 
     public function store(StoreTagRequest $request): RedirectResponse
     {
-        $dto = TagStoreDto::fromRequest($request);
-        $this->tagService->store($dto);
+        $this->tagService->store(
+            dto: $request->getDto(),
+        );
 
         return redirect()->route('tags.index');
     }
@@ -55,8 +56,10 @@ class TagController extends Controller
 
     public function update(UpdateTagRequest $request, Tag $tag): RedirectResponse
     {
-        $dto = TagUpdateDto::fromRequest($request);
-        $this->tagService->updateByTag($dto, $tag);
+        $this->tagService->updateByTag(
+            dto: $request->getDto(),
+            tag: $tag,
+        );
 
         return redirect()->route('tags.index');
     }

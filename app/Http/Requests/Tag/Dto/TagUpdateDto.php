@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Tag;
+namespace App\Http\Requests\Tag\Dto;
 
+use App\Contracts\DtoContract;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-final class TagUpdateDto
+final readonly class TagUpdateDto implements DtoContract
 {
     public function __construct(
-        public readonly ?UuidInterface $id,
-        public readonly string $name,
-        public readonly string $color,
+        public ?UuidInterface $id,
+        public string         $name,
+        public string         $color,
     ) {
         //
     }

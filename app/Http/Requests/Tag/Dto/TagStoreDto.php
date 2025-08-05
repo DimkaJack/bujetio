@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Tag;
+namespace App\Http\Requests\Tag\Dto;
 
+use App\Contracts\DtoContract;
 use Illuminate\Http\Request;
 
-final class TagStoreDto
+final readonly class TagStoreDto implements DtoContract
 {
     public function __construct(
-        public readonly string $name,
-        public readonly string $color,
+        public string $name,
+        public string $color,
     ) {
         //
     }
