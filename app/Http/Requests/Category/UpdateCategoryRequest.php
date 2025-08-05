@@ -42,6 +42,6 @@ class UpdateCategoryRequest extends BaseFormRequest
 
     public function getDto(): CategoryUpdateDto
     {
-        return Dto\CategoryUpdateDto::fromRequest($this);
+        return CategoryUpdateDto::fromRequest($this);
     }
 }

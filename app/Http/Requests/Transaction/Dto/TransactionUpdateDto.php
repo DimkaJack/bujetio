@@ -2,25 +2,27 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Transaction;
+namespace App\Http\Requests\Transaction\Dto;
 
 use App\Constants\TransactionTypeEnum;
+use App\Contracts\DtoContract;
 use Carbon\Carbon;
 use Cknow\Money\Money;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-final class TransactionStoreDto
+final readonly class TransactionUpdateDto implements DtoContract
 {
     public function __construct(
-        public readonly TransactionTypeEnum $type,
-        public readonly string $name,
-        public readonly Money $amount,
-        public readonly UuidInterface $productId,
-        public readonly UuidInterface $categoryId,
-        public readonly Carbon $payDate,
-        public readonly array $tags = [],
+        public ?UuidInterface      $id,
+        public TransactionTypeEnum $type,
+        public string              $name,
+        public Money               $amount,
+        public UuidInterface       $productId,
+        public UuidInterface       $categoryId,
+        public Carbon              $payDate,
+        public array               $tags = [],
     ) {
         //
     }
@@ -28,6 +30,7 @@ final class TransactionStoreDto
     public static function fromRequest(Request $request): self
     {
         return new self(
+            id: isset($request->uuid) ? Uuid::fromString($request->uuid) : null,
             type: TransactionTypeEnum::from($request->input('type')),
             name: $request->input('name'),
             amount: Money::parseByDecimal(

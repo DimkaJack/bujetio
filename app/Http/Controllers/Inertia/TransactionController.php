@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Inertia;
 
 use App\Constants\TransactionTypeEnum;
-use App\Dto\Transaction\TransactionStoreDto;
-use App\Dto\Transaction\TransactionUpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
@@ -23,10 +21,10 @@ use Inertia\Response;
 final class TransactionController extends Controller
 {
     public function __construct(
-        private readonly CategoryService $categoryService,
-        private readonly ProductService $productService,
+        private readonly CategoryService    $categoryService,
+        private readonly ProductService     $productService,
         private readonly TransactionService $transactionService,
-        private readonly TagService $tagService,
+        private readonly TagService         $tagService,
     ) {
         //
     }
@@ -58,8 +56,9 @@ final class TransactionController extends Controller
 
     public function store(StoreTransactionRequest $request): RedirectResponse
     {
-        $dto = TransactionStoreDto::fromRequest($request);
-        $this->transactionService->store($dto);
+        $this->transactionService->store(
+            dto: $request->getDto(),
+        );
 
         return redirect()->route('transactions.index');
     }
@@ -91,8 +90,10 @@ final class TransactionController extends Controller
 
     public function update(UpdateTransactionRequest $request, Transaction $transaction): RedirectResponse
     {
-        $dto = TransactionUpdateDto::fromRequest($request);
-        $this->transactionService->updateByTransaction($dto, $transaction);
+        $this->transactionService->updateByTransaction(
+            dto: $request->getDto(),
+            transaction: $transaction
+        );
 
         return redirect()->route('transactions.index');
     }

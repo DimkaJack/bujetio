@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Constants\TransactionTypeEnum;
-use App\Dto\Transaction\TransactionStoreDto;
-use App\Dto\Transaction\TransactionUpdateDto;
+use App\Http\Requests\Transaction\Dto\TransactionStoreDto;
+use App\Http\Requests\Transaction\Dto\TransactionUpdateDto;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -58,6 +58,13 @@ final class TransactionService
         $product->save();
 
         return $transaction;
+    }
+
+    public function update(TransactionUpdateDto $dto): Transaction
+    {
+        $transaction = Transaction::find($dto->id);
+
+        return $this->updateByTransaction($dto, $transaction);
     }
 
     public function updateByTransaction(TransactionUpdateDto $dto, Transaction $transaction): Transaction

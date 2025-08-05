@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Dto\Transaction\TransactionStoreDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Transaction\Dto\TransactionStoreDto;
 use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
 use App\Http\Resources\Transaction\GetTransactionResource;
@@ -50,9 +50,11 @@ final class TransactionController extends Controller
      */
     public function store(StoreTransactionRequest $request): GetTransactionResource
     {
-        $dto = TransactionStoreDto::fromRequest($request);
-
-        return new GetTransactionResource($this->transactionService->store($dto));
+        return new GetTransactionResource(
+            $this->transactionService->store(
+                dto: $request->getDto(),
+            )
+        );
     }
 
     /**
@@ -84,9 +86,13 @@ final class TransactionController extends Controller
      * @param Transaction $transaction
      * @return Response
      */
-    public function update(UpdateTransactionRequest $request, Transaction $transaction)
+    public function update(UpdateTransactionRequest $request, Transaction $transaction): GetTransactionResource
     {
-        //
+        return new GetTransactionResource(
+            $this->transactionService->update(
+                dto: $request->getDto(),
+            )
+        );
     }
 
     /**

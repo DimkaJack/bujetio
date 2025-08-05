@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Category;
 
 use App\Http\Requests\BaseFormRequest;
+use App\Http\Requests\Category\Dto\CategoryStoreDto;
 
 class StoreCategoryRequest extends BaseFormRequest
 {
@@ -41,8 +42,8 @@ class StoreCategoryRequest extends BaseFormRequest
         ];
     }
 
-    public function getDto(): Dto\CategoryStoreDto
+    public function getDto(): CategoryStoreDto
     {
-        return Dto\CategoryStoreDto::fromRequest($this);
+        return CategoryStoreDto::fromRequest($this);
     }
 }
