@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Dto\Category\CategoryStoreDto;
-use App\Dto\Category\CategoryUpdateDto;
+use App\Http\Requests\Category\Dto\CategoryStoreDto;
+use App\Http\Requests\Category\Dto\CategoryUpdateDto;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;

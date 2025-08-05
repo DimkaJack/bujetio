@@ -2,16 +2,17 @@
 
 namespace App\Http\Requests\Category;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
+use App\Http\Requests\Category\Dto\CategoryUpdateDto;
 
-class UpdateCategoryRequest extends FormRequest
+class UpdateCategoryRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +22,7 @@ class UpdateCategoryRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => [
@@ -37,5 +38,10 @@ class UpdateCategoryRequest extends FormRequest
                 'regex:/^(#(?:[0-9a-f]{2}){2,4}|#[0-9a-f]{3})/i',
             ],
         ];
+    }
+
+    public function getDto(): CategoryUpdateDto
+    {
+        return Dto\CategoryUpdateDto::fromRequest($this);
     }
 }

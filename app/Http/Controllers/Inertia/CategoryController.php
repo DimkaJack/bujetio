@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Inertia;
 
-use App\Dto\Category\CategoryStoreDto;
-use App\Dto\Category\CategoryUpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
@@ -20,7 +18,8 @@ class CategoryController extends Controller
 {
     public function __construct(
         private readonly CategoryService $categoryService,
-    ) {
+    )
+    {
         //
     }
 
@@ -38,8 +37,9 @@ class CategoryController extends Controller
 
     public function store(StoreCategoryRequest $request): RedirectResponse
     {
-        $dto = CategoryStoreDto::fromRequest($request);
-        $this->categoryService->store($dto);
+        $this->categoryService->store(
+            dto: $request->getDto(),
+        );
 
         return redirect()->route('categories.index');
     }
@@ -47,7 +47,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
     public function show(Category $category)
@@ -63,8 +63,10 @@ class CategoryController extends Controller
 
     public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
     {
-        $dto = CategoryUpdateDto::fromRequest($request);
-        $this->categoryService->updateByCategory($dto, $category);
+        $this->categoryService->updateByCategory(
+            dto: $request->getDto(),
+            category: $category
+        );
 
         return redirect()->route('categories.index');
     }

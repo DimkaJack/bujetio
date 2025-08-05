@@ -2,14 +2,15 @@
 
 namespace App\Dto\Budget;
 
+use App\Contracts\DtoContract;
 use Money\Money;
 
-final class BudgetDto
+final readonly class BudgetDto implements DtoContract
 {
     public function __construct(
-        public readonly Money $balance,
-        public readonly ?Money $income = null,
-        public readonly ?Money $outcome = null,
+        public Money $balance,
+        public ?Money $income = null,
+        public ?Money $outcome = null,
     ) {
         //
     }
