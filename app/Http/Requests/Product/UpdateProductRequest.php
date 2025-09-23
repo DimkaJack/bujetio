@@ -41,7 +41,7 @@ class UpdateProductRequest extends BaseFormRequest
                 Rule::in(Arr::pluck(ProductTypeEnum::cases(), 'value')),
             ],
             'startBalanceAmount' => [
-                'required',
+                'required', //todo can edit only if no transactions
                 'numeric',
             ],
             'startBalanceCurrency' => [
@@ -49,19 +49,14 @@ class UpdateProductRequest extends BaseFormRequest
                 'string',
                 'max:4',
             ],
-            'balanceAmount' => [
-                'required',
-                'numeric',
-            ],
-            'balanceCurrency' => [
-                'required',
-                'string',
-                'max:4',
-            ],
             'bankLoanAmount' => [
                 'requiredIf:type,' . ProductTypeEnum::CREDIT_LOAN->value,
-                'requiredIf:type,' . ProductTypeEnum::CREDIT_LOAN->value,
                 'numeric',
+            ],
+            'bankLoanCurrency' => [
+                'requiredIf:type,' . ProductTypeEnum::CREDIT_LOAN->value,
+                'string',
+                'max:4',
             ],
         ];
     }

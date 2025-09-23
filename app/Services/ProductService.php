@@ -9,7 +9,6 @@ use App\Http\Requests\Product\Dto\ProductUpdateDto;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\UuidInterface;
 
@@ -24,7 +23,7 @@ final class ProductService
 
     /**
      * @param UuidInterface $id
-     * @return HasMany|object|Product|null
+     * @return Product|null
      */
     public function get(UuidInterface $id): ?Product
     {
@@ -40,7 +39,6 @@ final class ProductService
         $product->name = $dto->name;
         $product->type = $dto->type->value;
         $product->startBalance = $dto->startBalance;
-        $product->balance = $dto->balance;
         $product->bankLoan = $dto->bankLoan;
         $product->user()->associate(Auth::user());
         $product->save();
@@ -61,7 +59,6 @@ final class ProductService
         $product->name = $dto->name;
         $product->type = $dto->type->value;
         $product->startBalance = $dto->startBalance;
-        $product->balance = $dto->balance;
         $product->bankLoan = $dto->bankLoan;
         $product->save();
 

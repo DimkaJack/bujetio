@@ -49,19 +49,14 @@ class StoreProductRequest extends BaseFormRequest
                 'string',
                 'max:4',
             ],
-            'balanceAmount' => [
-                'required',
-                'numeric',
-            ],
-            'balanceCurrency' => [
-                'required',
-                'string',
-                'max:4',
-            ],
             'bankLoanAmount' => [
                 'requiredIf:type,' . ProductTypeEnum::CREDIT_LOAN->value,
-                'requiredIf:type,' . ProductTypeEnum::CREDIT_LOAN->value,
                 'numeric',
+            ],
+            'bankLoanCurrency' => [
+                'requiredIf:type,' . ProductTypeEnum::CREDIT_LOAN->value,
+                'string',
+                'max:4',
             ],
         ];
     }

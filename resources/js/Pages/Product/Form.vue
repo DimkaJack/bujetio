@@ -59,21 +59,6 @@ const isCredit = computed(() =>
         <InputError class="mt-2" :message="props.form.errors.startBalanceAmount"/>
     </div>
 
-    <div class="mt-4">
-        <InputLabel for="balanceAmount" value="Current balance"/>
-
-        <CurrencyInput
-            id="balanceAmount"
-            type="text"
-            class="mt-1 block w-full"
-            v-model="props.form.balanceAmount"
-            :options="{ currency: props.form.balanceCurrency }"
-            required
-        />
-
-        <InputError class="mt-2" :message="props.form.errors.balanceAmount"/>
-    </div>
-
     <!--                @todo create constants-->
     <div class="mt-4" v-if="isCredit">
         <InputLabel for="bankLoanAmount" value="Bank loan amount"/>
