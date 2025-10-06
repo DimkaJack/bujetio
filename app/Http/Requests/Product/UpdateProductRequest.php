@@ -2,16 +2,22 @@
 
 namespace App\Http\Requests\Product;
 
+use App\Constants\ProductTypeEnum;
+use App\Contracts\DtoContract;
+use App\Http\Requests\BaseFormRequest;
+use App\Http\Requests\Product\Dto\ProductUpdateDto;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 
-class UpdateProductRequest extends FormRequest
+class UpdateProductRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,10 +27,42 @@ class UpdateProductRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'type' => [
+                'required',
+                'numeric',
+                Rule::in(Arr::pluck(ProductTypeEnum::cases(), 'value')),
+            ],
+            'startBalanceAmount' => [
+                'required', //todo can edit only if no transactions
+                'numeric',
+            ],
+            'startBalanceCurrency' => [
+                'required',
+                'string',
+                'max:4',
+            ],
+            'bankLoanAmount' => [
+                'requiredIf:type,' . ProductTypeEnum::CREDIT_LOAN->value,
+                'numeric',
+            ],
+            'bankLoanCurrency' => [
+                'requiredIf:type,' . ProductTypeEnum::CREDIT_LOAN->value,
+                'string',
+                'max:4',
+            ],
         ];
+    }
+
+    public function getDto(): ProductUpdateDto
+    {
+        return ProductUpdateDto::fromRequest($this);
     }
 }

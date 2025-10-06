@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Product;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Constants\ProductTypeEnum;
+use App\Http\Requests\BaseFormRequest;
+use App\Http\Requests\Product\Dto\ProductStoreDto;
+use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 
-class StoreProductRequest extends FormRequest
+class StoreProductRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -23,10 +27,42 @@ class StoreProductRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'type' => [
+                'required',
+                'numeric',
+                Rule::in(Arr::pluck(ProductTypeEnum::cases(), 'value')),
+            ],
+            'startBalanceAmount' => [
+                'required',
+                'numeric',
+            ],
+            'startBalanceCurrency' => [
+                'required',
+                'string',
+                'max:4',
+            ],
+            'bankLoanAmount' => [
+                'requiredIf:type,' . ProductTypeEnum::CREDIT_LOAN->value,
+                'numeric',
+            ],
+            'bankLoanCurrency' => [
+                'requiredIf:type,' . ProductTypeEnum::CREDIT_LOAN->value,
+                'string',
+                'max:4',
+            ],
         ];
+    }
+
+    public function getDto(): ProductStoreDto
+    {
+        return ProductStoreDto::fromRequest($this);
     }
 }

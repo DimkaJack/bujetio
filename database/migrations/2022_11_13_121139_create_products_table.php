@@ -18,10 +18,11 @@ return new class extends Migration
             $table->string('name');
             $table->integer('type');
             //@todo extract balance to entity
-            $table->integer('start_balance_amount');
+            $table->bigInteger('start_balance_amount');
             $table->string('start_balance_currency');
-            $table->integer('balance_amount');
+            $table->bigInteger('balance_amount');
             $table->string('balance_currency');
+            $table->bigInteger('bank_loan_amount');
             $table->foreignUuid('user_id')->constrained('users');
             $table->timestamps();
 

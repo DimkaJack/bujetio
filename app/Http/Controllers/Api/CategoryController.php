@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
-use App\Dto\Category\CategoryStoreDto;
-use App\Dto\Category\CategoryUpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
@@ -50,14 +50,17 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request): CategoryResource
     {
-        $dto = CategoryStoreDto::fromRequest($request);
-        return new CategoryResource($this->categoryService->store($dto));
+        return new CategoryResource(
+            $this->categoryService->store(
+                dto: $request->getDto(),
+            )
+        );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
     public function show(Category $category)
@@ -68,7 +71,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
     public function edit(Category $category)
@@ -85,15 +88,17 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request): CategoryResource
     {
-        $dto = CategoryUpdateDto::fromRequest($request);
-
-        return new CategoryResource($this->categoryService->update($dto));
+        return new CategoryResource(
+            $this->categoryService->update(
+                dto: $request->getDto(),
+            )
+        );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request): bool

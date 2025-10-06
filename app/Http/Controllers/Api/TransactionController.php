@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Dto\Transaction\TransactionStoreDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Transaction\Dto\TransactionStoreDto;
 use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
-use App\Http\Resources\TransactionResource;
+use App\Http\Resources\Transaction\GetTransactionResource;
 use App\Models\Transaction;
 use App\Services\TransactionService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -30,7 +29,7 @@ final class TransactionController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return TransactionResource::collection($this->transactionService->getList());
+        return GetTransactionResource::collection($this->transactionService->getList());
     }
 
     /**
@@ -47,13 +46,15 @@ final class TransactionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreTransactionRequest $request
-     * @return TransactionResource
+     * @return \App\Http\Resources\Transaction\GetTransactionResource
      */
-    public function store(StoreTransactionRequest $request): TransactionResource
+    public function store(StoreTransactionRequest $request): GetTransactionResource
     {
-        $dto = TransactionStoreDto::fromRequest($request);
-
-        return new TransactionResource($this->transactionService->store($dto));
+        return new GetTransactionResource(
+            $this->transactionService->store(
+                dto: $request->getDto(),
+            )
+        );
     }
 
     /**
@@ -85,9 +86,13 @@ final class TransactionController extends Controller
      * @param Transaction $transaction
      * @return Response
      */
-    public function update(UpdateTransactionRequest $request, Transaction $transaction)
+    public function update(UpdateTransactionRequest $request, Transaction $transaction): GetTransactionResource
     {
-        //
+        return new GetTransactionResource(
+            $this->transactionService->update(
+                dto: $request->getDto(),
+            )
+        );
     }
 
     /**
