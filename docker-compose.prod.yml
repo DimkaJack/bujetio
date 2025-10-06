@@ -11,7 +11,7 @@ services:
         env_file:
             - .env
         volumes:
-            - ./:/var/www
+            - ./:/var/www/html
             - .deploy/php/local.ini:/usr/local/etc/php/conf.d/local.ini
         networks:
             - bujetio_app
