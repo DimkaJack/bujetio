@@ -5,7 +5,7 @@ services:
         container_name: bujetio_php
         build:
             context: .deploy
-            dockerfile: .deploy/Dockerfile
+            dockerfile: Dockerfile
         restart: unless-stopped
         working_dir: /var/www
         env_file:
