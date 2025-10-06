@@ -4,15 +4,15 @@ services:
     app:
         container_name: bujetio_php
         build:
-            context: ./
-            dockerfile: ./Dockerfile
+            context: .deploy
+            dockerfile: .deploy/Dockerfile
         restart: unless-stopped
         working_dir: /var/www
         env_file:
-            -   ./../.env
+            - .env
         volumes:
-            - ./../:/var/www
-            - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+            - ./:/var/www
+            - .deploy/php/local.ini:/usr/local/etc/php/conf.d/local.ini
         networks:
             - bujetio_app
 
@@ -23,8 +23,8 @@ services:
         ports:
             - "${FORWARD_NGINX_PORT:-80}:80"
         volumes:
-            - ./../:/var/www
-            - ./nginx/:/etc/nginx/conf.d/
+            - ./:/var/www
+            - .deploy/nginx/:/etc/nginx/conf.d/
         depends_on:
             - app
         networks:
@@ -54,6 +54,7 @@ services:
 
 volumes:
     db_data:
+        driver: local
 
 networks:
     bujetio_app:
