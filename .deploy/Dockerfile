@@ -1,9 +1,6 @@
 # Use the official PHP 8.1 image as base
 FROM php:8.4-fpm
 
-# Set working directory
-WORKDIR /var/www
-
 # Системные зависимости для сборки расширений (gd, intl, zip и т.д.)
 RUN apt-get update && apt-get install -y \
     git \
@@ -31,18 +28,10 @@ RUN docker-php-ext-install pdo_mysql \
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Add user for laravel application
-#RUN groupadd -g 1000 www
-#RUN useradd -u 1000 -ms /bin/bash -g www www
+WORKDIR /var/www/html
+VOLUME /var/www/html
 
-# Copy existing application directory contents
-COPY . /var/www
-
-# Copy existing application directory permissions
-COPY --chown=www:www . /var/www
-
-# Change current user to www
-#USER www
+USER www-data
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
