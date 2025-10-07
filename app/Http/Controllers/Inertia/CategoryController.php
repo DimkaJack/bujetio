@@ -47,12 +47,13 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Category $category
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return RedirectResponse
      */
-    public function show(Category $category)
+    public function show(Category $category): RedirectResponse
     {
-        //
+        //@todo
+        return redirect()->route('categories.index');
     }
 
     public function edit(Category $category): Response

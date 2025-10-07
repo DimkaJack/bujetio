@@ -18,11 +18,13 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^v3.5.5",
         "fakerphp/faker": "^1.9.1",
+        "larastan/larastan": "^3.3",
         "laravel/breeze": "^2.0",
         "laravel/pint": "^1.0",
         "laravel/sail": "^v1.41.0",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^v8.6.1",
+        "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^11.0",
         "spatie/laravel-ignition": "^2.0"
     },
@@ -51,7 +53,8 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "phpstan": "@php vendor/bin/phpstan -c phpstan.neon"
     },
     "extra": {
         "laravel": {

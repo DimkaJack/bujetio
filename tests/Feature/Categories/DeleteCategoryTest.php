@@ -24,6 +24,6 @@ class DeleteCategoryTest extends TestCase
             ->withSession(['banned' => false])
             ->deleteJson('/api/categories/' . $category->id);
 
-        $response->assertStatus(200);//->assertJsonCount();
+        $response->assertStatus(204);//->assertJsonCount();
     }
 }

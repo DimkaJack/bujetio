@@ -8,8 +8,10 @@ use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Resources\Product\GetProductResource;
 use App\Models\Product;
 use App\Services\ProductService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Ramsey\Uuid\Uuid;
 
 class ProductController extends Controller
@@ -33,11 +35,12 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function create()
+    public function create(): JsonResponse
     {
-        //
+        //@todo
+        return response()->json();
     }
 
     /**
@@ -58,23 +61,25 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return JsonResponse
      */
-    public function show(Product $product)
+    public function show(Product $product): JsonResponse
     {
-        //
+        //@todo
+        return response()->json();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return JsonResponse
      */
-    public function edit(Product $product)
+    public function edit(Product $product): JsonResponse
     {
-        //
+        //@todo
+        return response()->json();
     }
 
     /**
@@ -96,15 +101,19 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Request $request
-     * @return bool
+     * @return JsonResponse
      */
-    public function destroy(Request $request): bool
+    public function destroy(Request $request): JsonResponse
     {
         //@todo fix to validation
-        if (!empty($request->uuid) && Uuid::isValid($request->uuid)) {
-            return $this->productService->delete(Uuid::fromString($request->uuid));
+        if (
+            !empty($request->uuid)
+            && Uuid::isValid($request->uuid)
+            && $this->productService->delete(Uuid::fromString($request->uuid))
+        ) {
+            return response()->json(status: Response::HTTP_NO_CONTENT);
         }
 
-        return false;
+        return response()->json(status: Response::HTTP_BAD_REQUEST);
     }
 }

@@ -25,8 +25,10 @@ class StoreTransactionTest extends TestCase
 
         $request = [
             'type' => 1,
+            'name' => fake()->name,
             'amount' => 10,
-            'currency' => 'RUB',
+            'amountCurrency' => 'RUB',
+            'payDate' => now()->toDateTimeString(),
             'productId' => $product->id,
             'categoryId' => $category->id,
         ];

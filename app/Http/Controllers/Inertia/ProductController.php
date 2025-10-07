@@ -49,12 +49,12 @@ final class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return RedirectResponse
      */
-    public function show(Product $product)
+    public function show(Product $product): RedirectResponse
     {
-        //
+        return redirect()->route('products.index');
     }
 
     public function edit(Product $product): Response
