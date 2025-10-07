@@ -25,6 +25,6 @@ class DeleteProductTest extends TestCase
             ->withSession(['banned' => false])
             ->deleteJson('/api/products/' . $product->id);
 
-        $response->assertStatus(200);//->assertJsonCount();
+        $response->assertStatus(204);//->assertJsonCount();
     }
 }

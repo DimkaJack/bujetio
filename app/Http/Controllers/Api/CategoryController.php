@@ -10,8 +10,10 @@ use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Services\CategoryService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Ramsey\Uuid\Uuid;
 
 class CategoryController extends Controller
@@ -35,11 +37,12 @@ class CategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function create()
+    public function create(): JsonResponse
     {
-        //
+        //@todo
+        return response()->json();
     }
 
     /**
@@ -60,23 +63,25 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Category $category
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return JsonResponse
      */
-    public function show(Category $category)
+    public function show(Category $category): JsonResponse
     {
-        //
+        //@todo
+        return response()->json();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Category $category
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return JsonResponse
      */
-    public function edit(Category $category)
+    public function edit(Category $category): JsonResponse
     {
-        //
+        //@todo
+        return response()->json();
     }
 
     /**
@@ -98,16 +103,20 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Category $category
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function destroy(Request $request): bool
+    public function destroy(Request $request): JsonResponse
     {
         //@todo fix to validation
-        if (!empty($request->uuid) && Uuid::isValid($request->uuid)) {
-            return $this->categoryService->delete(Uuid::fromString($request->uuid));
+        if (
+            !empty($request->uuid)
+            && Uuid::isValid($request->uuid)
+            && $this->categoryService->delete(Uuid::fromString($request->uuid))
+        ) {
+            return response()->json(status: Response::HTTP_NO_CONTENT);
         }
 
-        return false;
+        return response()->json(status: Response::HTTP_BAD_REQUEST);
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Requests\Transaction\UpdateTransactionRequest;
 use App\Http\Resources\Transaction\GetTransactionResource;
 use App\Models\Transaction;
 use App\Services\TransactionService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -35,11 +36,12 @@ final class TransactionController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function create()
+    public function create(): JsonResponse
     {
-        //
+        //@todo
+        return response()->json();
     }
 
     /**
@@ -60,23 +62,25 @@ final class TransactionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @param Transaction $transaction
+     * @return JsonResponse
      */
-    public function show(Transaction $transaction)
+    public function show(Transaction $transaction): JsonResponse
     {
-        //
+        //@todo
+        return response()->json();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @param Transaction $transaction
+     * @return JsonResponse
      */
-    public function edit(Transaction $transaction)
+    public function edit(Transaction $transaction): JsonResponse
     {
-        //
+        //@todo
+        return response()->json();
     }
 
     /**
@@ -98,11 +102,12 @@ final class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @param Transaction $transaction
+     * @return JsonResponse
      */
-    public function destroy(Transaction $transaction)
+    public function destroy(Transaction $transaction): JsonResponse
     {
-        //
+        //@todo
+        return response()->json();
     }
 }
