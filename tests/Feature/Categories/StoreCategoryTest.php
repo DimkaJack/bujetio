@@ -18,7 +18,7 @@ class StoreCategoryTest extends TestCase
 
         $request = [
             'name' => fake()->name,
-            'color' => fake()->colorName,
+            'color' => fake()->hexColor(),
         ];
 
         $response = $this->actingAs($user)

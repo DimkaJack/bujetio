@@ -22,8 +22,6 @@ class StoreProductTest extends TestCase
             'type' => ProductTypeEnum::DEBIT_CARD->value,
             'startBalanceAmount' => 0,
             'startBalanceCurrency' => 'RUB',
-            'balanceAmount' => 0,
-            'balanceCurrency' => 'RUB',
         ];
 
         $response = $this->actingAs($user)
